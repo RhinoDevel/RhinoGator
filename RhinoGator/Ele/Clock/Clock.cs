@@ -38,9 +38,7 @@ namespace Ele
             _firstOutput = _p.StartHigh ? State.High : State.Low;
             _secondOutput = _p.StartHigh ? State.Low : State.High;
 
-            // Not necessary (unknown time), but for clarification:
-            //
-            Output = _p.StartHigh ? State.High : State.Low;
+            Output = State.Unknown;
         }
 
         internal void Forward(uint timeSteps)
