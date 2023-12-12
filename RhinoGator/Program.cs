@@ -11,11 +11,21 @@ var clock = new Clock(
             PulseSteps = 10000,
             StartHigh = false
         });
+var highPass = new HighPass();
 
 clock.Forward(0);
+highPass.Update(clock.Output);
 clock.Forward(9999);
+highPass.Update(clock.Output);
 clock.Forward(10000);
+highPass.Update(clock.Output);
+clock.Forward(10001);
+highPass.Update(clock.Output);
+clock.Forward(10002);
+highPass.Update(clock.Output);
 clock.Forward(19999);
+highPass.Update(clock.Output);
 clock.Forward(20000);
+highPass.Update(clock.Output);
 
 Console.WriteLine("RhinoGator!");

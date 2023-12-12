@@ -9,17 +9,17 @@ namespace Ele
         /// Pulse length in time steps.
         /// </summary>
         /// <remarks>
-        /// The pulse length is the sum of <see cref="ClockOutput.High"/> and
-        /// <see cref="ClockOutput.Falling"/>, which equals the sum of
-        /// <see cref="ClockOutput.Low"/> and <see cref="ClockOutput.Rising"/>,
-        /// where <see cref="ClockOutput.Falling"/> and
-        /// <see cref="ClockOutput.Rising"/> always take a single time step.
+        /// The pulse length is the sum of <see cref="State.High"/> and
+        /// <see cref="State.Falling"/>, which equals the sum of
+        /// <see cref="State.Low"/> and <see cref="State.Rising"/>,
+        /// where <see cref="State.Falling"/> and
+        /// <see cref="State.Rising"/> always take a single time step.
         /// </remarks>
         internal uint PulseSteps;
 
         /// <summary>
-        /// If clock shall start with <see cref="ClockOutput.High"/> or with
-        /// <see cref="ClockOutput.Low"/>.
+        /// If clock shall start with <see cref="State.High"/> or with
+        /// <see cref="State.Low"/>.
         /// </summary>
         internal bool StartHigh;
     }
