@@ -62,7 +62,6 @@ namespace RhinoGator.Ele.Basic
                 {
                     if(isHigh)
                     {
-                        Debug.Assert(false); // Should not happen (no rise?)..
                         Output = State.Rising;
                         return;
                     }
