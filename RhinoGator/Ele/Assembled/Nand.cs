@@ -4,6 +4,9 @@
 namespace RhinoGator.Ele.Assembled
 {
     /// <remarks>
+    /// This is logically equivalent to a bubbled OR gate (De Morgan's second
+    /// theorem).
+    /// 
     /// Page 34.
     /// </remarks>
     internal class Nand

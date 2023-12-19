@@ -4,6 +4,9 @@
 namespace RhinoGator.Ele.Assembled
 {
     /// <remarks>
+    /// This is logically equivalent to a bubbled AND gate (De Morgan's first
+    /// theorem).
+    /// 
     /// Page 32.
     /// </remarks>
     internal class Nor
