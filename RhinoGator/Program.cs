@@ -5,9 +5,9 @@
 
 namespace RhinoGator
 {
-    public class Program()
+    internal class Program()
     {
-        public static void Main()
+        internal static void Main()
         {
             // var clock = new Ele.Basic.Clock.Clock(
             //         new Ele.Basic.Clock.ClockParams
