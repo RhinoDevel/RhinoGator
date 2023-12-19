@@ -1,7 +1,7 @@
 
 // RhinoDevel, MT, 2023dec12
 
-namespace Ele
+namespace RhinoGator.Ele.Basic.Clock
 {
     /// <summary>
     /// Clock generator.

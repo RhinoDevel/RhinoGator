@@ -3,7 +3,7 @@
 
 using System.Diagnostics;
 
-namespace Ele
+namespace RhinoGator.Ele.Basic
 {
     internal class And
     {

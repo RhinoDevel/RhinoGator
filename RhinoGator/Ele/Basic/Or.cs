@@ -1,32 +1,24 @@
 
-// RhinoDevel, MT, 2023dec12
+// RhinoDevel, MT, 2023dec13
 
 using System.Diagnostics;
 
-namespace Ele
+namespace RhinoGator.Ele.Basic
 {
-    /// <summary>
-    /// High-pass filter.
-    /// </summary>
-    /// <remarks>
-    /// Output rises (under some circumstances), if input is high.
-    /// Output gets high, if input is still high and output has risen.
-    /// Output gets low after being high.
-    /// </remarks>
-    internal class HighPass
+    internal class Or
     {
         internal State Output { get; private set; } = State.Unknown;
 
-        public void Update(State input)
+        public void Update(List<State> inputs)
         {
+            bool isHigh = inputs.Any(
+                s => s == State.High || s == State.Falling);
+
             switch(Output)
             {
                 case State.Unknown:
                 {
-                    // On "init", rise, if input is high,
-                    // otherwise set output to defined low state:
-
-                    if(input == State.High)
+                    if(isHigh)
                     {
                         Output = State.Rising;
                         return;
@@ -37,9 +29,7 @@ namespace Ele
 
                 case State.Low:
                 {
-                    // Rise, if input is high, stay low otherwise:
-
-                    if(input == State.High)
+                    if(isHigh)
                     {
                         Output = State.Rising;
                         return;
@@ -49,10 +39,7 @@ namespace Ele
 
                 case State.Rising:
                 {
-                    // If input is still high, set output to high,
-                    // otherwise let output fall:
-
-                    if(input == State.High)
+                    if(isHigh)
                     {
                         Output = State.High;
                         return;
@@ -63,19 +50,17 @@ namespace Ele
 
                 case State.High:
                 {
-                    // The high state is short, because this is a high-pass
-                    // filter:
-
+                    if(isHigh)
+                    {
+                        return; // (keep high output)
+                    }
                     Output = State.Falling;
                     return;
                 }
 
                 case State.Falling:
                 {
-                    // Rise (again), if input got (suddenly..) high,
-                    // otherwise reach low state:
-
-                    if(input == State.High)
+                    if(isHigh)
                     {
                         Debug.Assert(false); // Should not happen (no rise?)..
                         Output = State.Rising;
