@@ -7,10 +7,9 @@ namespace Ele
     /// Clock generator.
     /// </summary>
     /// <remarks>
-    /// Always generates a symmetric square wave.
+    /// Always generates a symmetric square wave (a duty cycle of 50%).
     /// 
-    /// Always starts with <see cref="State.Low"/> or
-    /// <see cref="State.High"/>.
+    /// Always starts with <see cref="State.Low"/> or <see cref="State.High"/>.
     /// 
     /// Always rises and falls in one time step.
     /// </remarks>
