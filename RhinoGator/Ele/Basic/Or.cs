@@ -1,14 +1,10 @@
 
 // RhinoDevel, MT, 2023dec13
 
-using System.Diagnostics;
-
 namespace RhinoGator.Ele.Basic
 {
-    internal class Or
+    internal class Or : Base
     {
-        internal State Output { get; private set; } = State.Unknown;
-
         public void Update(List<State> inputs)
         {
             bool isHigh = inputs.Any(

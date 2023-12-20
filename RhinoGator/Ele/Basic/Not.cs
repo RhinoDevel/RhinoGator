@@ -8,10 +8,8 @@ namespace RhinoGator.Ele.Basic
     /// <summary>
     /// An inverting buffer.
     /// </summary>
-    internal class Not
+    internal class Not : Base
     {
-        internal State Output { get; private set; } = State.Unknown;
-
         public void Update(State input)
         {
             bool isHigh = input == State.Low || input == State.Rising;

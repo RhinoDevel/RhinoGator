@@ -13,7 +13,7 @@ namespace RhinoGator.Ele.Basic.Clock
     /// 
     /// Always rises and falls in one time step.
     /// </remarks>
-    internal class Clock
+    internal class Clock : Base
     {
         private readonly ClockParams _p;
 
@@ -22,8 +22,6 @@ namespace RhinoGator.Ele.Basic.Clock
         private readonly uint _cyclePosFalling;
         private readonly State _firstOutput;
         private readonly State _secondOutput;
-
-        internal State Output { get; private set; }
 
         internal Clock(ClockParams p)
         {
@@ -36,8 +34,6 @@ namespace RhinoGator.Ele.Basic.Clock
                 _p.StartHigh ? (_p.PulseSteps - 1) : (_cycleSteps - 1);
             _firstOutput = _p.StartHigh ? State.High : State.Low;
             _secondOutput = _p.StartHigh ? State.Low : State.High;
-
-            Output = State.Unknown;
         }
 
         internal void Forward(uint timeSteps)

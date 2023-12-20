@@ -13,10 +13,8 @@ namespace RhinoGator.Ele.Basic
     /// Output gets high, if input is still high and output has risen.
     /// Output gets low after being high.
     /// </remarks>
-    internal class HighPass
+    internal class HighPass : Base
     {
-        internal State Output { get; private set; } = State.Unknown;
-
         public void Update(State input)
         {
             switch(Output)
