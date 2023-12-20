@@ -1,6 +1,8 @@
 
 // RhinoDevel, MT, 2023dec20
 
+using System.Diagnostics;
+
 namespace RhinoGator.Ele.Basic
 {
     /// <summary>
@@ -9,7 +11,21 @@ namespace RhinoGator.Ele.Basic
     /// </summary>
     internal abstract class Base
     {
-        internal State Output { get; private protected set; } = State.Unknown;
+        internal State Output { get; private set; } = State.Unknown;
+
+        /// <remarks>
+        /// null means no restriction.
+        /// </remarks>
+        private readonly int? _maxInputs;
+
+        private protected Base(int? maxInputs)
+        {
+            Debug.Assert(maxInputs == null || 0 <= maxInputs.Value);
+
+            _maxInputs = maxInputs;
+        }
+
+        private protected abstract bool IsNextOutputHigh(List<State> inputs);
 
         /// <summary>
         /// Get the output (state) that should follow based on the last output
@@ -25,8 +41,7 @@ namespace RhinoGator.Ele.Basic
         /// <remarks>
         /// Rising and falling takes one (last-to-next output) change.
         /// </remarks>
-        private protected static State GetOutput(
-            State lastOutput, bool nextIsHigh)
+        private static State GetOutput(State lastOutput, bool nextIsHigh)
         {
             switch(lastOutput)
             {
@@ -82,6 +97,19 @@ namespace RhinoGator.Ele.Basic
                         $"Unsupported (last) output state {(int)lastOutput}!");
                 }
             }
+        }
+
+        internal void Update(List<State> inputs)
+        {
+            Debug.Assert(inputs != null);
+            
+            // Must have been checked before usage:
+            //
+            Debug.Assert(_maxInputs == null || inputs.Count <= _maxInputs);
+
+            var nextIsHigh = IsNextOutputHigh(inputs);
+
+            Output = GetOutput(Output, nextIsHigh);
         }
     }
 }

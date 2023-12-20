@@ -5,12 +5,14 @@ namespace RhinoGator.Ele.Basic
 {
     internal class Or : Base
     {
-        internal void Update(List<State> inputs)
+        internal Or() : base(null)
         {
-            bool nextIsHigh = inputs.Any(
-                s => s == State.High || s == State.Falling);
+            // Nothing to do.
+        }
 
-            Output = GetOutput(Output, nextIsHigh);
+        private protected override bool IsNextOutputHigh(List<State> inputs)
+        {
+            return inputs.Any(s => s == State.High || s == State.Falling);
         }
     }
 }

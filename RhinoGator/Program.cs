@@ -9,28 +9,35 @@ namespace RhinoGator
     {
         internal static void Main()
         {
-            // var clock = new Ele.Basic.Clock.Clock(
-            //         new Ele.Basic.Clock.ClockParams
-            //         {
-            //             PulseSteps = 10000,
-            //             StartHigh = false
-            //         });
-            // var highPass = new Ele.Basic.HighPass();
-            //
-            // clock.Forward(0);
-            // highPass.Update(clock.Output);
-            // clock.Forward(9999);
-            // highPass.Update(clock.Output);
-            // clock.Forward(10000);
-            // highPass.Update(clock.Output);
-            // clock.Forward(10001);
-            // highPass.Update(clock.Output);
-            // clock.Forward(10002);
-            // highPass.Update(clock.Output);
-            // clock.Forward(19999);
-            // highPass.Update(clock.Output);
-            // clock.Forward(20000);
-            // highPass.Update(clock.Output);
+            var clock = new Ele.Basic.Clock.Clock(
+                    new Ele.Basic.Clock.ClockParams
+                    {
+                        PulseSteps = 10000,
+                        StartHigh = false
+                    });
+            var highPass = new Ele.Basic.HighPass();
+            
+            clock.Forward(0);
+            clock.Update(new List<State>());
+            highPass.Update(new List<State>{clock.Output});
+            clock.Forward(9999 - 1);
+            clock.Update(new List<State>());
+            highPass.Update(new List<State>{clock.Output});
+
+            clock.Update(new List<State>());
+            highPass.Update(new List<State>{clock.Output});
+
+            clock.Update(new List<State>());
+            highPass.Update(new List<State>{clock.Output});
+
+            clock.Update(new List<State>());
+            highPass.Update(new List<State>{clock.Output});
+            clock.Forward(19999 - 10003);
+            clock.Update(new List<State>());
+            highPass.Update(new List<State>{clock.Output});
+
+            clock.Update(new List<State>());
+            highPass.Update(new List<State>{clock.Output});
 
             var xor = new Ele.Assembled.Xor();
 

@@ -29,7 +29,7 @@ namespace RhinoGator.Ele.Assembled
         internal void Update(List<State> inputs)
         {
             _and.Update(inputs);
-            _not.Update(_and.Output);
+            _not.Update(new List<State>{ _and.Output });
         }
     }
 }

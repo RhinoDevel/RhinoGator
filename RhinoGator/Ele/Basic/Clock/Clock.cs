@@ -11,51 +11,53 @@ namespace RhinoGator.Ele.Basic.Clock
     /// 
     /// Always starts with <see cref="State.Low"/> or <see cref="State.High"/>.
     /// 
-    /// Always rises and falls in one time step.
+    /// Always rises and falls in one "time" step.
     /// </remarks>
     internal class Clock : Base
     {
         private readonly ClockParams _p;
 
         private readonly uint _cycleSteps;
-        private readonly uint _cyclePosRising;
-        private readonly uint _cyclePosFalling;
-        private readonly State _firstOutput;
-        private readonly State _secondOutput;
 
-        internal Clock(ClockParams p)
+        private uint _cyclePos;
+
+        internal Clock(ClockParams p) : base(0)
         {
-            _p = p;
+            _p = p; // Kind of bad: Reference.
 
-            _cycleSteps = _p.PulseSteps << 1;
-            _cyclePosRising =
-                _p.StartHigh ? (_cycleSteps - 1) : (_p.PulseSteps - 1);
-            _cyclePosFalling =
-                _p.StartHigh ? (_p.PulseSteps - 1) : (_cycleSteps - 1);
-            _firstOutput = _p.StartHigh ? State.High : State.Low;
-            _secondOutput = _p.StartHigh ? State.Low : State.High;
+            _cycleSteps = 2 * _p.PulseSteps;
+
+            _cyclePos = 0;
         }
 
-        internal void Forward(uint timeSteps)
+        /// <remarks>
+        /// Also increments <see cref="_cyclePos"/> for the next call.
+        /// </remarks>
+        private protected override bool IsNextOutputHigh(List<State> inputs)
         {
-            uint cyclePos = timeSteps % _cycleSteps;
+            bool retVal;
+        
+            if(_cyclePos < _p.PulseSteps)
+            {
+                retVal = _p.StartHigh;
+            }
+            else
+            {
+                retVal = !_p.StartHigh;
+            }
 
-            if(cyclePos == _cyclePosRising)
-            {
-                Output = State.Rising;
-                return;
-            }
-            if(cyclePos == _cyclePosFalling)
-            {
-                Output = State.Falling;
-                return;
-            }
-            if(cyclePos < _p.PulseSteps)
-            {
-                Output = _firstOutput;
-                return;
-            }
-            Output = _secondOutput;
+            Forward(1);
+
+            return retVal;
+        }
+
+        /// <remarks>
+        /// Does NOT update, just moves the cycle position!
+        /// </remarks>
+        internal void Forward(uint steps)
+        {
+            _cyclePos = _cyclePos + steps;
+            _cyclePos = _cyclePos % _cycleSteps;
         }
     }
 }

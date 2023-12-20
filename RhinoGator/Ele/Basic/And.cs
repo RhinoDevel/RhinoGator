@@ -1,18 +1,21 @@
 
 // RhinoDevel, MT, 2023dec12
 
-using System.Diagnostics;
+using System.Linq;
 
 namespace RhinoGator.Ele.Basic
 {
     internal class And : Base
     {
-        internal void Update(List<State> inputs)
+        internal And() : base(null)
         {
-            bool nextIsHigh = inputs.TrueForAll(
-                s => s == State.High || s == State.Falling);
+            // Nothing to do.
+        }
 
-            Output = GetOutput(Output, nextIsHigh);
+        private protected override bool IsNextOutputHigh(List<State> inputs)
+        {
+            return inputs.TrueForAll(
+                s => s == State.High || s == State.Falling);
         }
     }
 }

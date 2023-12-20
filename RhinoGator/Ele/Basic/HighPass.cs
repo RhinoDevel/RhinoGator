@@ -1,8 +1,6 @@
 
 // RhinoDevel, MT, 2023dec12
 
-using System.Diagnostics;
-
 namespace RhinoGator.Ele.Basic
 {
     /// <summary>
@@ -10,11 +8,14 @@ namespace RhinoGator.Ele.Basic
     /// </summary>
     internal class HighPass : Base
     {
-        internal void Update(State input)
+        internal HighPass() : base(1)
         {
-            bool nextIsHigh = Output != State.High && input == State.High;
+            // Nothing to do.
+        }
 
-            Output = GetOutput(Output, nextIsHigh);
+        private protected override bool IsNextOutputHigh(List<State> inputs)
+        {
+            return Output != State.High && inputs[0] == State.High;
         }
     }
 }

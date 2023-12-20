@@ -1,8 +1,6 @@
 
 // RhinoDevel, MT, 2023dec19
 
-using System.Diagnostics;
-
 namespace RhinoGator.Ele.Basic
 {
     /// <summary>
@@ -10,11 +8,14 @@ namespace RhinoGator.Ele.Basic
     /// </summary>
     internal class Not : Base
     {
-        internal void Update(State input)
+        internal Not() : base(1)
         {
-            bool nextIsHigh = input == State.Low || input == State.Rising;
+            // Nothing to do.
+        }
 
-            Output = GetOutput(Output, nextIsHigh);
+        private protected override bool IsNextOutputHigh(List<State> inputs)
+        {
+            return inputs[0] == State.Low || inputs[0] == State.Rising;
         }
     }
 }
