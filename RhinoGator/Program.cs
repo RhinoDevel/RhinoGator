@@ -17,7 +17,6 @@ namespace RhinoGator
                     });
             var highPass = new Ele.Basic.HighPass();
             
-            clock.Forward(0);
             clock.Update(new List<State>());
             highPass.Update(new List<State>{clock.Output});
             clock.Forward(9999 - 1);
