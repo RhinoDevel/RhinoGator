@@ -4,7 +4,8 @@
 namespace RhinoGator.Ele.Basic
 {
     /// <summary>
-    /// High-pass filter.
+    /// High-pass filter. Each time the input goes high, the output will
+    /// generate a short spike.
     /// </summary>
     internal class HighPass : Base
     {
