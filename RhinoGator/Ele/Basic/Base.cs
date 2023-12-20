@@ -75,6 +75,7 @@ namespace RhinoGator.Ele.Basic
                     return State.Low;
                 }
 
+                case State.NotConnected: // Falls through. Maybe impl. later?
                 default:
                 {
                     throw new Exception(
