@@ -54,6 +54,8 @@ namespace RhinoGator
                 var leftTicks = _ticks - elapsedTicks;
 
                 Thread.Sleep(new TimeSpan(leftTicks));
+                //
+                // (each tick equals 100 nanoseconds)
             }
         }
     }
