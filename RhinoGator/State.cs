@@ -3,6 +3,9 @@
 
 namespace RhinoGator
 {
+    /// <summary>
+    /// The possible states of an element's input or output.
+    /// </summary>
     internal enum State
     {
         Unknown = -1,

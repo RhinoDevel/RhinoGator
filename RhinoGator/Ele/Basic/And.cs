@@ -1,8 +1,6 @@
 
 // RhinoDevel, MT, 2023dec12
 
-using System.Linq;
-
 namespace RhinoGator.Ele.Basic
 {
     internal class And : Base

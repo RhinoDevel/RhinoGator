@@ -6,8 +6,8 @@ using System.Diagnostics;
 namespace RhinoGator.Ele.Basic
 {
     /// <summary>
-    /// Base class for basic logic elements that are not put together by using
-    /// other elements.
+    /// Base class for basic (e.g. logic) elements that are not put together by
+    /// using other ("logic") elements.
     /// </summary>
     internal abstract class Base
     {
