@@ -18,6 +18,9 @@ namespace RhinoGator.Ele.Basic
         /// If the next output should logically be high (otherwise it should
         /// logically be low).
         /// </param>
+        /// <remarks>
+        /// Rising and falling takes one (last-to-next output) change.
+        /// </remarks>
         private protected static State GetOutput(
             State lastOutput, bool nextIsHigh)
         {
