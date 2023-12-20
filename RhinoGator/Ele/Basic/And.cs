@@ -7,7 +7,7 @@ namespace RhinoGator.Ele.Basic
 {
     internal class And : Base
     {
-        public void Update(List<State> inputs)
+        internal void Update(List<State> inputs)
         {
             bool isHigh = inputs.TrueForAll(
                 s => s == State.High || s == State.Falling);

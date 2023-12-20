@@ -15,7 +15,7 @@ namespace RhinoGator.Ele.Basic
     /// </remarks>
     internal class HighPass : Base
     {
-        public void Update(State input)
+        internal void Update(State input)
         {
             switch(Output)
             {

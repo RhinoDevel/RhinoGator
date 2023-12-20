@@ -5,7 +5,7 @@ namespace RhinoGator.Ele.Basic
 {
     internal class Or : Base
     {
-        public void Update(List<State> inputs)
+        internal void Update(List<State> inputs)
         {
             bool isHigh = inputs.Any(
                 s => s == State.High || s == State.Falling);

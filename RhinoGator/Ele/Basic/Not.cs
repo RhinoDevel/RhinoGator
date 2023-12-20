@@ -10,7 +10,7 @@ namespace RhinoGator.Ele.Basic
     /// </summary>
     internal class Not : Base
     {
-        public void Update(State input)
+        internal void Update(State input)
         {
             bool isHigh = input == State.Low || input == State.Rising;
 

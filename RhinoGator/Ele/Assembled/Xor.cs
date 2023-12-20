@@ -26,7 +26,7 @@ namespace RhinoGator.Ele.Assembled
             }
         }
 
-        public void Update(State inputA, State inputB)
+        internal void Update(State inputA, State inputB)
         {
             _notA.Update(inputA);
             _andA.Update(new List<State>{ _notA.Output, inputB });
