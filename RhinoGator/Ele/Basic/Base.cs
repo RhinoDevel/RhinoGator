@@ -3,6 +3,10 @@
 
 namespace RhinoGator.Ele.Basic
 {
+    /// <summary>
+    /// Base class for basic logic elements that are not put together by using
+    /// other elements.
+    /// </summary>
     internal abstract class Base
     {
         internal State Output { get; private protected set; } = State.Unknown;
