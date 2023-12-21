@@ -16,6 +16,8 @@ namespace RhinoGator
         private const double _ms = 1000.0 * 1.0 / (double)_freq;
         private const long _ticks = (long)(10.0 * 1000.0 * _ms + 0.5); // Rounds
 
+        private static List<ConsoleKey> _werePressed = new List<ConsoleKey>();
+
         private static void BlitToConsole()
         {
             Console.SetCursorPosition(0, 0);
@@ -55,7 +57,7 @@ namespace RhinoGator
             do
             {
                 long beginTicks, elapsedTicks, leftTicks;
-                List<ConsoleKey> pressedKeys;
+                List<ConsoleKey> pressedKeys, releasedKeys;
 
                 beginTicks = DateTime.Now.Ticks;
 
@@ -66,7 +68,12 @@ namespace RhinoGator
                     break; // Exits game loop.
                 }
 
-                o.HandleUserInput(pressedKeys);
+                releasedKeys = _werePressed.Where(
+                    ck => !pressedKeys.Contains(ck)).ToList();
+
+                _werePressed = pressedKeys;
+
+                o.HandleUserInput(releasedKeys);
                 
                 o.Update(_w, _h, _frameBuf);
 

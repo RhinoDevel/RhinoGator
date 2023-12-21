@@ -5,7 +5,7 @@ namespace RhinoGator
 {
     internal interface IGameLoop
     {
-        internal void HandleUserInput(List<ConsoleKey> pressedKeys);
+        internal void HandleUserInput(List<ConsoleKey> releasedKeys);
         internal void Update(int w, int h, char[] frameBuf);
     }
 }
