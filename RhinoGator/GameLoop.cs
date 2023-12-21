@@ -16,6 +16,10 @@ namespace RhinoGator
         private const double _ms = 1000.0 * 1.0 / (double)_freq;
         private const long _ticks = (long)(10.0 * 1000.0 * _ms + 0.5); // Rounds
 
+        private const int _stepNs = 10; // Nanoseconds per (time-)step.
+        private const int _steps = // (Time-)steps per iteration.
+            (int)((1000.0 * 1000.0 * _ms) / _stepNs + 0.5); // Rounds
+
         private static void BlitToConsole()
         {
             Console.SetCursorPosition(0, 0);
@@ -102,7 +106,7 @@ namespace RhinoGator
                 // *** Update output: ***
                 // **********************
 
-                o.Update(_w, _h, _frameBuf);
+                o.Update(_steps, _w, _h, _frameBuf);
     
                 // ******************************************
                 // *** Copy from frame buffer to console: ***

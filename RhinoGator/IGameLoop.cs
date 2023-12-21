@@ -7,6 +7,6 @@ namespace RhinoGator
     {
         internal void Init(int w, int h, byte[] frameBuf);
         internal void HandleUserInput(List<ConsoleKey> pressedKeys);
-        internal void Update(int w, int h, byte[] frameBuf);
+        internal void Update(int steps, int w, int h, byte[] frameBuf);
     }
 }

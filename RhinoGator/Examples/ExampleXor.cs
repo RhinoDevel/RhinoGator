@@ -33,7 +33,7 @@ namespace RhinoGator.Examples
             }
         }
 
-        void IGameLoop.Update(int w, int h, byte[] frameBuf)
+        void IGameLoop.Update(int steps, int w, int h, byte[] frameBuf)
         {
             Debug.Assert(
                 (_tsA.Dependencies
