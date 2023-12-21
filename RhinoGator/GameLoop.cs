@@ -85,20 +85,26 @@ namespace RhinoGator
                 }
 
                 o.Update(_w, _h, _frameBuf);
+    
+#if DEBUG
+                var debBlitStart = DateTime.Now.Ticks;
+#endif //DEBUG
+
+                BlitToConsole();
+
+#if DEBUG
+                var debBlitTicks = DateTime.Now.Ticks - debBlitStart;
+#endif //DEBUG
 
                 elapsedTicks = DateTime.Now.Ticks - beginTicks;
                 Debug.Assert(_ticks >= elapsedTicks);
                 leftTicks = _ticks - elapsedTicks;
                 Thread.Sleep(new TimeSpan(leftTicks)); // 1 tick = 100 ns.
 
-                var blitStart = DateTime.Now.Ticks;
-
-                BlitToConsole(); // TODO: Assuming this takes 0 ticks..!
-
-                var blitTicks = DateTime.Now.Ticks - blitStart;
-
+                // (assuming that this debug output takes 0 ticks..)
+                //
 #if DEBUG
-                Console.Write($"{leftTicks} + {blitTicks}");
+                Console.Write($"{leftTicks} ({debBlitTicks})");
 #endif //DEBUG
             }while(true);
         }
