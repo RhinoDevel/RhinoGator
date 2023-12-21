@@ -1,6 +1,7 @@
 
 // Marcel Timm, RhinoDevel, 2023dec21
 
+using System.Diagnostics;
 using RhinoGator.Ele.Assembled;
 using RhinoGator.Ele.Basic;
 
@@ -34,6 +35,16 @@ namespace RhinoGator.Examples
 
         void IGameLoop.Update(int w, int h, byte[] frameBuf)
         {
+            Debug.Assert(
+                (_tsA.Dependencies
+                    & ~(OutputDep.User | OutputDep.CurInputs)) == 0);
+            Debug.Assert(
+                (_tsB.Dependencies
+                    & ~(OutputDep.User | OutputDep.CurInputs)) == 0);
+            Debug.Assert(
+                (_xor.GetDependencies()
+                    & ~(OutputDep.User | OutputDep.CurInputs)) == 0);
+
             _tsA.Update(new List<State>{ State.Low });
             _tsB.Update(new List<State>{ State.Low });
             _xor.Update(_tsA.Output, _tsB.Output);

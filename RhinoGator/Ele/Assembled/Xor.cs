@@ -6,7 +6,7 @@ namespace RhinoGator.Ele.Assembled
     /// <remarks>
     /// Page 37.
     /// </remarks>
-    internal class Xor
+    internal class Xor : Base
     {
         private Basic.Not _notA = new Basic.Not();
         private Basic.Not _notB = new Basic.Not();
@@ -24,6 +24,15 @@ namespace RhinoGator.Ele.Assembled
             {
                 throw new NotSupportedException();
             }
+        }
+
+        internal override OutputDep GetDependencies()
+        {
+            return _notA.Dependencies
+                | _notB.Dependencies
+                | _andA.Dependencies
+                | _andB.Dependencies
+                | _or.Dependencies;
         }
 
         internal void Update(State inputA, State inputB)

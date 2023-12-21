@@ -9,7 +9,7 @@ namespace RhinoGator.Ele.Assembled
     /// 
     /// Page 32.
     /// </remarks>
-    internal class Nor
+    internal class Nor : Base
     {
         private Basic.Or _or = new Basic.Or();
         private Basic.Not _not = new Basic.Not();
@@ -24,6 +24,11 @@ namespace RhinoGator.Ele.Assembled
             {
                 throw new NotSupportedException();
             }
+        }
+
+        internal override OutputDep GetDependencies()
+        {
+            return _or.Dependencies | _not.Dependencies;
         }
 
         internal void Update(List<State> inputs)

@@ -9,7 +9,7 @@ namespace RhinoGator.Ele.Assembled
     /// 
     /// Page 34.
     /// </remarks>
-    internal class Nand
+    internal class Nand : Base
     {
         private Basic.And _and = new Basic.And();
         private Basic.Not _not = new Basic.Not();
@@ -24,6 +24,11 @@ namespace RhinoGator.Ele.Assembled
             {
                 throw new NotSupportedException();
             }
+        }
+
+        internal override OutputDep GetDependencies()
+        {
+            return _and.Dependencies | _not.Dependencies;
         }
 
         internal void Update(List<State> inputs)
