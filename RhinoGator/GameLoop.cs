@@ -35,7 +35,7 @@ namespace RhinoGator
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.CursorVisible = false;
 
-            while (true)
+            do
             {
                 var beginTicks = DateTime.Now.Ticks;
 
@@ -56,7 +56,7 @@ namespace RhinoGator
                 Thread.Sleep(new TimeSpan(leftTicks));
                 //
                 // (each tick equals 100 nanoseconds)
-            }
+            }while(true);
         }
     }
 }
