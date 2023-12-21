@@ -25,9 +25,9 @@ namespace RhinoGator
         Time = 1 << 2,
 
         /// <summary>
-        /// Output (state) depens on its own last output (e.g. a high pass
+        /// Output (state) depens on its own last outputs (e.g. a high pass
         /// filter).
         /// </summary>
-        LastOutput = 1 << 3
+        LastOutputs = 1 << 3
     }
 }

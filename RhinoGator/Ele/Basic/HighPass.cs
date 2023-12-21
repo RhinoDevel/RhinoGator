@@ -11,7 +11,7 @@ namespace RhinoGator.Ele.Basic
     {
         private static readonly int? _maxInputs = 1;
         private const OutputDep _dependencies =
-            OutputDep.LastOutput | OutputDep.CurInputs;
+            OutputDep.LastOutputs | OutputDep.CurInputs;
 
         internal HighPass() : base(_maxInputs, _dependencies)
         {
