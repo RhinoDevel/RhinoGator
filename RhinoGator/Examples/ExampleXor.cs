@@ -24,7 +24,7 @@ namespace RhinoGator.Examples
             }
         }
 
-        void IGameLoop.Update(int w, int h, char[] frameBuf)
+        void IGameLoop.Update(int w, int h, byte[] frameBuf)
         {
             _tsA.Update(new List<State>{ State.Low });
             _tsB.Update(new List<State>{ State.Low });
@@ -33,18 +33,18 @@ namespace RhinoGator.Examples
 
             for(int i = 0; i < frameBuf.Length; ++i)
             {
-                frameBuf[i] = ' ';
+                frameBuf[i] = (byte)' ';
             }
             
             frameBuf[0] = 
                 _tsA.Output == State.High || _tsA.Output == State.Falling
-                    ? '1' : '0';
+                    ? (byte)'1' : (byte)'0';
             frameBuf[2] =
                 _tsB.Output == State.High || _tsB.Output == State.Falling
-                    ? '1' : '0';
+                    ? (byte)'1' : (byte)'0';
             frameBuf[4] = 
                 _xor.Output == State.High || _xor.Output == State.Falling
-                    ? '1' : '0';
+                    ? (byte)'1' : (byte)'0';
         }
     }
 }
