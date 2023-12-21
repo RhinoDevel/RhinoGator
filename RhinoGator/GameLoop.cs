@@ -7,8 +7,10 @@ namespace RhinoGator
 {
     internal static class GameLoop
     {
-        private const byte _consoleWidth = 80;
-        private const byte _consoleHeight = 25;
+        private const int _w = 80;
+        private const int _h = 25;
+
+        private static readonly char[] _frameBuf = new char[_w * _h];
 
         private const int _freq = 25; // Hz / FPS.
         private const double _ms = 1000.0 * 1.0 / (double)_freq;
@@ -18,19 +20,19 @@ namespace RhinoGator
         {
             Console.SetCursorPosition(0, 0);
 
-            for(int row = 0; row < _consoleHeight; ++row)
+            for(int row = 0; row < _h; ++row)
             {
-                //int rowIndex = row * _consoleWidth;
+                int rowIndex = row * _w;
 
-                for (int col = 0; col < _consoleWidth; ++col)
+                for (int col = 0; col < _w; ++col)
                 {
-                    Console.Write('.'); // TODO: Implement correctly!
+                    Console.Write(_frameBuf[rowIndex + col]);
                 }
                 Console.WriteLine();
             }
         }
 
-        internal static void Start()
+        internal static void Start(IGameLoop o)
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.CursorVisible = false;
@@ -39,11 +41,12 @@ namespace RhinoGator
             {
                 var beginTicks = DateTime.Now.Ticks;
 
-                // TODO: Call input handling routine!
+                if(o.HandleUserInput())
+                {
+                    break;
+                }
                 
-                // TODO: Call (graphical) output updating/creating routine!
-
-                BlitToConsole();
+                o.Update(_w, _h, _frameBuf);
 
                 var endTicks = DateTime.Now.Ticks;
 
@@ -56,6 +59,8 @@ namespace RhinoGator
                 Thread.Sleep(new TimeSpan(leftTicks));
                 //
                 // (each tick equals 100 nanoseconds)
+
+                BlitToConsole();
             }while(true);
         }
     }
