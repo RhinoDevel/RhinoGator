@@ -32,6 +32,10 @@ namespace RhinoGator
             }
         }
 
+        /// <summary>
+        /// Returns a distinct list of keys that are "currently" being pressed
+        /// by the user.
+        /// </summary>
         internal static List<ConsoleKey> GetPressedKeys()
         {
             var pressedKeys = new List<ConsoleKey>();
