@@ -50,28 +50,27 @@ namespace RhinoGator
 
             do
             {
-                var beginTicks = DateTime.Now.Ticks;
+                long beginTicks, elapsedTicks, leftTicks;
+
+                beginTicks = DateTime.Now.Ticks;
 
                 if(o.HandleUserInput(GetPressedKeys()))
                 {
-                    break;
+                    break; // Exits game loop.
                 }
                 
                 o.Update(_w, _h, _frameBuf);
 
-                var endTicks = DateTime.Now.Ticks;
-
-                var elapsedTicks = endTicks - beginTicks;
-
+                elapsedTicks = DateTime.Now.Ticks - beginTicks;
                 Debug.Assert(_ticks >= elapsedTicks);
+                leftTicks = _ticks - elapsedTicks;
+                Thread.Sleep(new TimeSpan(leftTicks)); // 1 tick = 100 ns.
 
-                var leftTicks = _ticks - elapsedTicks;
+                BlitToConsole(); // (assuming this takes "0" ticks..)
 
-                Thread.Sleep(new TimeSpan(leftTicks));
-                //
-                // (each tick equals 100 nanoseconds)
-
-                BlitToConsole();
+#if DEBUG
+                Console.Write(leftTicks);
+#endif //DEBUG
             }while(true);
         }
     }
