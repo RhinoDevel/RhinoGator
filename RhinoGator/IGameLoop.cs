@@ -8,7 +8,7 @@ namespace RhinoGator
         /// <returns>
         /// If game loop shall be exited.
         /// </returns>
-        internal bool HandleUserInput();
+        internal bool HandleUserInput(List<ConsoleKey> pressedKeys);
         internal void Update(int w, int h, char[] frameBuf);
     }
 }

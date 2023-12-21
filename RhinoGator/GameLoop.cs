@@ -32,6 +32,17 @@ namespace RhinoGator
             }
         }
 
+        internal static List<ConsoleKey> GetPressedKeys()
+        {
+            var pressedKeys = new List<ConsoleKey>();
+
+            while(Console.KeyAvailable)
+            {
+                pressedKeys.Add(Console.ReadKey(true).Key);
+            }
+            return pressedKeys.Distinct().ToList();
+        }
+
         internal static void Start(IGameLoop o)
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
@@ -41,7 +52,7 @@ namespace RhinoGator
             {
                 var beginTicks = DateTime.Now.Ticks;
 
-                if(o.HandleUserInput())
+                if(o.HandleUserInput(GetPressedKeys()))
                 {
                     break;
                 }

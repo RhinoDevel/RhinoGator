@@ -13,42 +13,17 @@ namespace RhinoGator.Examples
 
         private char c = '.';
 
-        bool IGameLoop.HandleUserInput()
+        bool IGameLoop.HandleUserInput(List<ConsoleKey> pressedKeys)
         {
-            bool aIsPressed = false,
-                bIsPressed = false;
-
             _aGotReleased = false;
             _bGotReleased = false;
 
-            while(Console.KeyAvailable)
+            if(pressedKeys.Contains(ConsoleKey.Escape))
             {
-                switch(Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.Escape:
-                    {
-                        return true;
-                    }
-
-                    case ConsoleKey.A:
-                    {
-                        aIsPressed = true;
-                        break;
-                    }
-                    case ConsoleKey.B:
-                    {
-                        bIsPressed = true;
-                        break;
-                    }
-
-                    default:
-                    {
-                        break;
-                    }
-                }
+                return true;
             }
 
-            if(aIsPressed)
+            if(pressedKeys.Contains(ConsoleKey.A))
             {
                 _aWasPressed = true;
             }
@@ -61,7 +36,7 @@ namespace RhinoGator.Examples
                 }
             }
 
-            if(bIsPressed)
+            if(pressedKeys.Contains(ConsoleKey.B))
             {
                 _bWasPressed = true;
             }
