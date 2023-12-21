@@ -12,6 +12,14 @@ namespace RhinoGator.Examples
         private readonly ToggleSwitch _tsB = new ToggleSwitch(true, true);
         private readonly Xor _xor = new Xor();
 
+        void IGameLoop.Init(int w, int h, byte[] frameBuf)
+        {
+            for(int i = 0; i < frameBuf.Length; ++i)
+            {
+                frameBuf[i] = (byte)' ';
+            }
+        }
+
         void IGameLoop.HandleUserInput(List<ConsoleKey> pressedKeys)
         {
             if(pressedKeys.Contains(ConsoleKey.A))
@@ -28,13 +36,7 @@ namespace RhinoGator.Examples
         {
             _tsA.Update(new List<State>{ State.Low });
             _tsB.Update(new List<State>{ State.Low });
-
             _xor.Update(_tsA.Output, _tsB.Output);
-
-            for(int i = 0; i < frameBuf.Length; ++i)
-            {
-                frameBuf[i] = (byte)' ';
-            }
             
             frameBuf[0] = 
                 _tsA.Output == State.High || _tsA.Output == State.Falling

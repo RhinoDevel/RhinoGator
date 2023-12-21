@@ -67,6 +67,8 @@ namespace RhinoGator
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.CursorVisible = false;
 
+            o.Init(_w, _h, _frameBuf);
+
             do
             {
                 long beginTicks, elapsedTicks, leftTicks;
