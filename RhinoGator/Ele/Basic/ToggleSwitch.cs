@@ -15,7 +15,7 @@ namespace RhinoGator.Ele.Basic
     /// </remarks>
     internal class ToggleSwitch : Base
     {
-        private static readonly int? _maxInputs = 0;
+        private static readonly int? _maxInputs = 1;
         private const OutputDep _dependencies = OutputDep.User;
         
         private readonly bool _isHighIfOpen;
