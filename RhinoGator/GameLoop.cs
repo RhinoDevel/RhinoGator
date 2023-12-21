@@ -55,13 +55,18 @@ namespace RhinoGator
             do
             {
                 long beginTicks, elapsedTicks, leftTicks;
+                List<ConsoleKey> pressedKeys;
 
                 beginTicks = DateTime.Now.Ticks;
 
-                if(o.HandleUserInput(GetPressedKeys()))
+                pressedKeys = GetPressedKeys();
+
+                if(pressedKeys.Contains(ConsoleKey.Escape))
                 {
                     break; // Exits game loop.
                 }
+
+                o.HandleUserInput(pressedKeys);
                 
                 o.Update(_w, _h, _frameBuf);
 

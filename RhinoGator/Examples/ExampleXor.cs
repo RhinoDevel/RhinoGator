@@ -15,15 +15,10 @@ namespace RhinoGator.Examples
         private bool _aWasPressed = false;
         private bool _bWasPressed = false;
 
-        bool IGameLoop.HandleUserInput(List<ConsoleKey> pressedKeys)
+        void IGameLoop.HandleUserInput(List<ConsoleKey> pressedKeys)
         {
             bool _aGotReleased = false,
                 _bGotReleased = false;
-
-            if(pressedKeys.Contains(ConsoleKey.Escape))
-            {
-                return true;
-            }
 
             if(pressedKeys.Contains(ConsoleKey.A))
             {
@@ -59,8 +54,6 @@ namespace RhinoGator.Examples
             {
                 _tsB.Toggle();
             }
-
-            return false;
         }
 
         void IGameLoop.Update(int w, int h, char[] frameBuf)
