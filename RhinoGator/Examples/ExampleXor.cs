@@ -12,13 +12,13 @@ namespace RhinoGator.Examples
         private readonly ToggleSwitch _tsB = new ToggleSwitch(true, true);
         private readonly Xor _xor = new Xor();
 
-        void IGameLoop.HandleUserInput(List<ConsoleKey> releasedKeys)
+        void IGameLoop.HandleUserInput(List<ConsoleKey> pressedKeys)
         {
-            if(releasedKeys.Contains(ConsoleKey.A))
+            if(pressedKeys.Contains(ConsoleKey.A))
             {
                 _tsA.Toggle();
             }
-            if(releasedKeys.Contains(ConsoleKey.B))
+            if(pressedKeys.Contains(ConsoleKey.B))
             {
                 _tsB.Toggle();
             }
