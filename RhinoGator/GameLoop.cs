@@ -67,13 +67,25 @@ namespace RhinoGator
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.CursorVisible = false;
 
+            // *********************************************************
+            // *** Initialize (e.g. static frame buffer background): ***
+            // *********************************************************
+
             o.Init(_w, _h, _frameBuf);
+
+            // ****************************
+            // *** Start infinite loop: ***
+            // ****************************
 
             do
             {
                 long beginTicks, elapsedTicks, leftTicks;
 
                 beginTicks = DateTime.Now.Ticks;
+
+                // ****************************************
+                // *** Handle key presses / user input: ***
+                // ****************************************
 
                 { // (limits scope)
                     var pressedKeys = GetPressedKeys();
@@ -86,8 +98,16 @@ namespace RhinoGator
                     o.HandleUserInput(pressedKeys);
                 }
 
+                // **********************
+                // *** Update output: ***
+                // **********************
+
                 o.Update(_w, _h, _frameBuf);
     
+                // ******************************************
+                // *** Copy from frame buffer to console: ***
+                // ******************************************
+
 #if DEBUG
                 var debBlitStart = DateTime.Now.Ticks;
 #endif //DEBUG
@@ -97,6 +117,10 @@ namespace RhinoGator
 #if DEBUG
                 var debBlitTicks = DateTime.Now.Ticks - debBlitStart;
 #endif //DEBUG
+
+                // **********************************
+                // *** Wait until next iteration: ***
+                // **********************************
 
                 elapsedTicks = DateTime.Now.Ticks - beginTicks;
                 Debug.Assert(_ticks >= elapsedTicks);
