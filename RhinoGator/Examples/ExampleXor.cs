@@ -1,22 +1,24 @@
 
 // Marcel Timm, RhinoDevel, 2023dec21
 
+using RhinoGator.Ele.Assembled;
+using RhinoGator.Ele.Basic;
+
 namespace RhinoGator.Examples
 {
     internal class ExampleXor : IGameLoop
     {
+        private readonly ToggleSwitch _tsA = new ToggleSwitch(true, true);
+        private readonly ToggleSwitch _tsB = new ToggleSwitch(true, true);
+        private readonly Xor _xor = new Xor();
+
         private bool _aWasPressed = false;
         private bool _bWasPressed = false;
 
-        private bool _aGotReleased = false;
-        private bool _bGotReleased = false;
-
-        private char c = '.';
-
         bool IGameLoop.HandleUserInput(List<ConsoleKey> pressedKeys)
         {
-            _aGotReleased = false;
-            _bGotReleased = false;
+            bool _aGotReleased = false,
+                _bGotReleased = false;
 
             if(pressedKeys.Contains(ConsoleKey.Escape))
             {
@@ -49,34 +51,39 @@ namespace RhinoGator.Examples
                 }
             }
 
+            if(_aGotReleased)
+            {
+                _tsA.Toggle();
+            }
+            if(_bGotReleased)
+            {
+                _tsB.Toggle();
+            }
+
             return false;
         }
 
         void IGameLoop.Update(int w, int h, char[] frameBuf)
         {
-            if(_aGotReleased && _bGotReleased)
-            {
-                c = c == '!' ? '.' : '!';
-            }
-            else
-            {
-                if(_aGotReleased)
-                {
-                    c = c == 'A' ? '.' : 'A';
-                }
-                else
-                {
-                    if(_bGotReleased)
-                    {
-                        c = c == 'B' ? '.' : 'B';
-                    }
-                }
-            }
+            _tsA.Update(new List<State>{ State.Low });
+            _tsB.Update(new List<State>{ State.Low });
+
+            _xor.Update(_tsA.Output, _tsB.Output);
 
             for(int i = 0; i < frameBuf.Length; ++i)
             {
-                frameBuf[i] = c;
+                frameBuf[i] = ' ';
             }
+            
+            frameBuf[0] = 
+                _tsA.Output == State.High || _tsA.Output == State.Falling
+                    ? '1' : '0';
+            frameBuf[2] =
+                _tsB.Output == State.High || _tsB.Output == State.Falling
+                    ? '1' : '0';
+            frameBuf[4] = 
+                _xor.Output == State.High || _xor.Output == State.Falling
+                    ? '1' : '0';
         }
     }
 }
