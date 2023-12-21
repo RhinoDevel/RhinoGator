@@ -15,13 +15,16 @@ namespace RhinoGator.Ele.Basic.Clock
     /// </remarks>
     internal class Clock : Base
     {
+        private static readonly int? _maxInputs = 0;
+        private const OutputDep _dependencies = OutputDep.Time;
+
         private readonly ClockParams _p;
 
         private readonly uint _cycleSteps;
 
         private uint _cyclePos;
 
-        internal Clock(ClockParams p) : base(0)
+        internal Clock(ClockParams p) : base(_maxInputs, _dependencies)
         {
             _p = p; // Kind of bad: Reference.
 

@@ -11,18 +11,24 @@ namespace RhinoGator.Ele.Basic
     /// </summary>
     internal abstract class Base
     {
-        internal State Output { get; private set; } = State.Unknown;
+        internal State Output { get; private set; }
+
+        internal readonly OutputDep Dependencies; 
 
         /// <remarks>
         /// null means no restriction.
         /// </remarks>
         private readonly int? _maxInputs;
 
-        private protected Base(int? maxInputs)
+        private protected Base(int? maxInputs, OutputDep dependencies)
         {
             Debug.Assert(maxInputs == null || 0 <= maxInputs.Value);
 
+            Dependencies = dependencies;
+
             _maxInputs = maxInputs;
+
+            Output = State.Unknown;
         }
 
         private protected abstract bool IsNextOutputHigh(List<State> inputs);

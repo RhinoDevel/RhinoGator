@@ -10,13 +10,20 @@ namespace RhinoGator.Ele.Basic
     /// If open, the output can be either low or high (depends on input
     /// parameter).
     /// </summary>
+    /// <remarks>
+    /// No switch bounce implemented, yet.
+    /// </remarks>
     internal class ToggleSwitch : Base
     {
+        private static readonly int? _maxInputs = 0;
+        private const OutputDep _dependencies = OutputDep.User;
+        
         private readonly bool _isHighIfOpen;
 
         internal bool IsClosed { get; private set; }
 
-        internal ToggleSwitch(bool highIfOpen, bool isClosed) : base(1)
+        internal ToggleSwitch(bool highIfOpen, bool isClosed)
+            : base(_maxInputs, _dependencies)
         {
             _isHighIfOpen = highIfOpen;
 

@@ -8,7 +8,10 @@ namespace RhinoGator.Ele.Basic
     /// </summary>
     internal class Not : Base
     {
-        internal Not() : base(1)
+        private static readonly int? _maxInputs = 1;
+        private const OutputDep _dependencies = OutputDep.CurInputs;
+
+        internal Not() : base(_maxInputs, _dependencies)
         {
             // Nothing to do.
         }

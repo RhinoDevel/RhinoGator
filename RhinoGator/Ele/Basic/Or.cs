@@ -5,7 +5,10 @@ namespace RhinoGator.Ele.Basic
 {
     internal class Or : Base
     {
-        internal Or() : base(null)
+        private static readonly int? _maxInputs = null;
+        private const OutputDep _dependencies = OutputDep.CurInputs;
+
+        internal Or() : base(_maxInputs, _dependencies)
         {
             // Nothing to do.
         }

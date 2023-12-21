@@ -8,7 +8,10 @@ namespace RhinoGator.Ele.Basic
     /// </summary>
     internal class Buffer : Base
     {
-        internal Buffer() : base(1)
+        private static readonly int? _maxInputs = 1;
+        private const OutputDep _dependencies = OutputDep.CurInputs;
+
+        internal Buffer() : base(_maxInputs, _dependencies)
         {
             // Nothing to do.
         }
