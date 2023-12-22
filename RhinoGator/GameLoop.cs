@@ -105,44 +105,48 @@ namespace RhinoGator
 
                     if(pressedKeys.Contains(ConsoleKey.Add))
                     {
-                        fps = 2.0 * fps; // TODO: Set maximum!
+                        fps = 2.0 * fps; // Set maximum?
                     }
                     else
                     {
                         if(pressedKeys.Contains(ConsoleKey.Subtract))
                         {
-                            fps = fps / 2.0; // TODO: Set minimum!
+                            fps = fps / 2.0;
+                            if(fps < 1.0)
+                            {
+                                fps = 1.0; // Kind of random, but OK.
+                            }
                         }
                     }
 
                     if(pressedKeys.Contains(ConsoleKey.Multiply))
                     {
-                        stepsPerFrame = 2.0 * stepsPerFrame; // TODO: Set maximum!
+                        stepsPerFrame = 2.0 * stepsPerFrame; // Set maximum?
                     }
                     else
                     {
                         if(pressedKeys.Contains(ConsoleKey.Divide))
                         {
-                            stepsPerFrame = stepsPerFrame / 2.0; // TODO: Set minimum!
+                            stepsPerFrame = stepsPerFrame / 2.0;
+                            if(stepsPerFrame < 1.0)
+                            {
+                                stepsPerFrame = 1.0;
+                            }
                         }
                     }
 
                     o.HandleUserInput(pressedKeys);
                 }
 
-                double msPerFrame = 1000.0 / fps;
-                long ticksPerFrame =
-                    (long)(10.0 * 1000.0 * msPerFrame + 0.5); // Rounds
+                // **********************
+                // *** Update output: ***
+                // **********************
 
-                // "Realistic" count of (time-)steps per frame currently not in use:
+                // "Realistic" count of (time-)steps per frame not in use:
                 //
                 //stepsPerFrame = // (Time-)steps per iteration.
                 //        (int)((1000.0 * 1000.0 * msPerFrame)
                 //                / _stepNs + 0.5); // Rounds
-
-                // **********************
-                // *** Update output: ***
-                // **********************
 
                 o.Update(
                     (int)(stepsPerFrame + 0.5), // Rounds
@@ -164,23 +168,36 @@ namespace RhinoGator
                 var debBlitTicks = DateTime.Now.Ticks - debBlitStart;
 #endif //DEBUG
 
+                // *************************************
+                // *** Print some additional output: ***
+                // *************************************
+
+                Console.Write($"FPS: {fps} | Steps/frame: {stepsPerFrame}");
+
                 // **********************************
                 // *** Wait until next iteration: ***
                 // **********************************
 
-                elapsedTicks = DateTime.Now.Ticks - beginTicks;
-                Debug.Assert(ticksPerFrame >= elapsedTicks);
-                leftTicks = ticksPerFrame - elapsedTicks;
-                Thread.Sleep(new TimeSpan(leftTicks)); // 1 tick = 100 ns.
+                { // (limits scope)
+                    double msPerFrame = 1000.0 / fps;
+                    long ticksPerFrame =
+                        (long)(10.0 * 1000.0 * msPerFrame + 0.5); // Rounds
 
-                // (assuming that this output takes 0 ticks..)
-                //
-                Console.Write($"FPS: {fps} | Steps/frame: {stepsPerFrame}");
+                    elapsedTicks = DateTime.Now.Ticks - beginTicks;
+                    Debug.Assert(ticksPerFrame >= elapsedTicks);
+                    leftTicks = ticksPerFrame - elapsedTicks;
+                    Thread.Sleep(new TimeSpan(leftTicks)); // 1 tick = 100 ns.
+                }
+
+                // *********************
+                // *** DEBUG output: ***
+                // *********************
 
                 // (assuming that this debug output takes 0 ticks..)
                 //
 #if DEBUG
-                Console.Write($" | {leftTicks} ({debBlitTicks})");
+                Console.Write(
+                    $" | Left: {leftTicks} ticks | Blit: {debBlitTicks} ticks");
 #endif //DEBUG
             }while(true);
         }
