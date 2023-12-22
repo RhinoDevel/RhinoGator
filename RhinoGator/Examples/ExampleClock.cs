@@ -54,6 +54,25 @@ namespace RhinoGator.Examples
             }
         }
 
+        private static void ScrollRowToLeft(int row, int w, byte[] frameBuf)
+        {
+            int rowOffset = row * w;
+
+            for(int col = 0;col < w - 1; ++col)
+            {
+                frameBuf[rowOffset + col] = frameBuf[rowOffset + col + 1];
+            }
+        }
+
+        private static void PushStateToRow(
+            State state, int row, int w, byte[] frameBuf)
+        {
+            // Scroll to the left and add state:
+            
+            ScrollRowToLeft(row, w, frameBuf);
+            frameBuf[row * w + w - 1] = (byte)GetStateChar(state);
+        }
+
         void IGameLoop.Init(int w, int h, byte[] frameBuf)
         {
             for(int i = 0; i < frameBuf.Length; ++i)
@@ -74,21 +93,8 @@ namespace RhinoGator.Examples
                 _clock.Update(new List<State>());
                 _hp.Update(new List<State>{ _clock.Output });
 
-                // Scroll to the left and add state for current step:
-                //
-                for(int p = 0;p < w - 1; ++p)
-                {
-                    frameBuf[p] = frameBuf[p + 1];
-                }
-                frameBuf[w - 1] = (byte)GetStateChar(_clock.Output);
-
-                // Scroll to the left and add state for current step:
-                //
-                for(int p = 0;p < w - 1; ++p)
-                {
-                    frameBuf[2 * w + p] = frameBuf[2 * w + p + 1];
-                }
-                frameBuf[2 * w + w - 1] = (byte)GetStateChar(_hp.Output);
+                PushStateToRow(_clock.Output, 0, w, frameBuf);
+                PushStateToRow(_hp.Output, 2, w, frameBuf);
             }
         }
     }
