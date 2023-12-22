@@ -9,7 +9,7 @@ namespace RhinoGator
     {
         internal static void Main()
         {
-            GameLoop.Start(new Examples.ExampleXor());
+            GameLoop.Start(new Examples.ExampleRsNandLatch());
 
             // var clock = new Ele.Basic.Clock.Clock(
             //         new Ele.Basic.Clock.ClockParams
