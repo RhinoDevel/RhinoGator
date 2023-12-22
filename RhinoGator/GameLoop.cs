@@ -7,20 +7,20 @@ namespace RhinoGator
 {
     internal static class GameLoop
     {
-        private const ConsoleKey _keyExit = ConsoleKey.Escape;
-
         private const int _w = 80;
         private const int _h = 25;
 
+        private const int _defaultFps = 25; // FPS / Hz.
+
+        // "Realistic" count of (time-)steps per frame currently not in use:
+        //
+        //private const int _stepNs = 10; // Nanoseconds per (time-)step.
+
+        private const int _defaultStepsPerFrame = 1; // Kind of random.
+
+        private const ConsoleKey _keyExit = ConsoleKey.Escape;
+
         private static readonly byte[] _frameBuf = new byte[_w * _h];
-
-        private const int _freq = 25; // Hz / FPS.
-        private const double _ms = 1000.0 * 1.0 / (double)_freq;
-        private const long _ticks = (long)(10.0 * 1000.0 * _ms + 0.5); // Rounds
-
-        private const int _stepNs = 10; // Nanoseconds per (time-)step.
-        private const int _steps = // (Time-)steps per iteration.
-            (int)((1000.0 * 1000.0 * _ms) / _stepNs + 0.5); // Rounds
 
         private static void BlitToConsole()
         {
@@ -70,6 +70,9 @@ namespace RhinoGator
 
         internal static void Start(IGameLoop o)
         {
+            double fps = (double)_defaultFps,
+                stepsPerFrame = (double)_defaultStepsPerFrame;
+
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.CursorVisible = false;
 
@@ -85,9 +88,8 @@ namespace RhinoGator
 
             do
             {
-                long beginTicks, elapsedTicks, leftTicks;
-
-                beginTicks = DateTime.Now.Ticks;
+                long beginTicks = DateTime.Now.Ticks,
+                    elapsedTicks, leftTicks;
 
                 // ****************************************
                 // *** Handle key presses / user input: ***
@@ -101,14 +103,52 @@ namespace RhinoGator
                         break; // Exits game loop.
                     }
 
+                    if(pressedKeys.Contains(ConsoleKey.Add))
+                    {
+                        fps = 2.0 * fps; // TODO: Set maximum!
+                    }
+                    else
+                    {
+                        if(pressedKeys.Contains(ConsoleKey.Subtract))
+                        {
+                            fps = fps / 2.0; // TODO: Set minimum!
+                        }
+                    }
+
+                    if(pressedKeys.Contains(ConsoleKey.Multiply))
+                    {
+                        stepsPerFrame = 2.0 * stepsPerFrame; // TODO: Set maximum!
+                    }
+                    else
+                    {
+                        if(pressedKeys.Contains(ConsoleKey.Divide))
+                        {
+                            stepsPerFrame = stepsPerFrame / 2.0; // TODO: Set minimum!
+                        }
+                    }
+
                     o.HandleUserInput(pressedKeys);
                 }
+
+                double msPerFrame = 1000.0 / fps;
+                long ticksPerFrame =
+                    (long)(10.0 * 1000.0 * msPerFrame + 0.5); // Rounds
+
+                // "Realistic" count of (time-)steps per frame currently not in use:
+                //
+                //stepsPerFrame = // (Time-)steps per iteration.
+                //        (int)((1000.0 * 1000.0 * msPerFrame)
+                //                / _stepNs + 0.5); // Rounds
 
                 // **********************
                 // *** Update output: ***
                 // **********************
 
-                o.Update(_steps, _w, _h, _frameBuf);
+                o.Update(
+                    (int)(stepsPerFrame + 0.5), // Rounds
+                    _w,
+                    _h,
+                    _frameBuf);
     
                 // ******************************************
                 // *** Copy from frame buffer to console: ***
@@ -129,14 +169,18 @@ namespace RhinoGator
                 // **********************************
 
                 elapsedTicks = DateTime.Now.Ticks - beginTicks;
-                Debug.Assert(_ticks >= elapsedTicks);
-                leftTicks = _ticks - elapsedTicks;
+                Debug.Assert(ticksPerFrame >= elapsedTicks);
+                leftTicks = ticksPerFrame - elapsedTicks;
                 Thread.Sleep(new TimeSpan(leftTicks)); // 1 tick = 100 ns.
+
+                // (assuming that this output takes 0 ticks..)
+                //
+                Console.Write($"FPS: {fps} | Steps/frame: {stepsPerFrame}");
 
                 // (assuming that this debug output takes 0 ticks..)
                 //
 #if DEBUG
-                Console.Write($"{leftTicks} ({debBlitTicks})");
+                Console.Write($" | {leftTicks} ({debBlitTicks})");
 #endif //DEBUG
             }while(true);
         }
