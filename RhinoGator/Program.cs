@@ -9,7 +9,7 @@ namespace RhinoGator
     {
         internal static void Main()
         {
-            GameLoop.Start(new Examples.ExampleRsNandLatch());
+            GameLoop.Start(new Examples.ExampleClock());
 
             // var clock = new Ele.Basic.Clock.Clock(
             //         new Ele.Basic.Clock.ClockParams
@@ -57,7 +57,7 @@ namespace RhinoGator
             //     new Tuple<State, State>(State.Low, State.High),
             //     new Tuple<State, State>(State.Low, State.High),
             //     new Tuple<State, State>(State.Low, State.High),
-            //     new Tuple<State, State>(State.Low, State.High),
+            //     new Tuple<Stat// Scroll to the left.e, State>(State.Low, State.High),
             //     new Tuple<State, State>(State.Low, State.High),
 
             //     new Tuple<State, State>(State.Rising, State.Falling),
