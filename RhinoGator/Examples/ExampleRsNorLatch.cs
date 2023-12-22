@@ -43,6 +43,7 @@ namespace RhinoGator.Examples
                 FrameBuf.PushStateToRow(_tsR.Output, 0, w, frameBuf);
                 FrameBuf.PushStateToRow(_tsS.Output, 2, w, frameBuf);
                 FrameBuf.PushStateToRow(_latch.Output, 4, w, frameBuf);
+                FrameBuf.PushStateToRow(_latch.SecondOutput, 6, w, frameBuf);
             }
         }
     }
