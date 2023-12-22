@@ -38,15 +38,12 @@ namespace RhinoGator.Examples
             _tsS.Update(new List<State>{ State.Low });
             _latch.Update(_tsR.Output, _tsS.Output);
             
-            frameBuf[0] = 
-                _tsR.Output == State.High || _tsR.Output == State.Falling
-                    ? (byte)'1' : (byte)'0';
-            frameBuf[2] =
-                _tsS.Output == State.High || _tsS.Output == State.Falling
-                    ? (byte)'1' : (byte)'0';
-            frameBuf[4] = 
-                _latch.Output == State.High || _latch.Output == State.Falling
-                    ? (byte)'1' : (byte)'0';
+            for(int i = 0;i < steps; ++i)
+            {
+                FrameBuf.PushStateToRow(_tsR.Output, 0, w, frameBuf);
+                FrameBuf.PushStateToRow(_tsS.Output, 2, w, frameBuf);
+                FrameBuf.PushStateToRow(_latch.Output, 4, w, frameBuf);
+            }
         }
     }
 }
