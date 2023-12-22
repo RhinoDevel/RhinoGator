@@ -7,6 +7,8 @@ namespace RhinoGator
 {
     internal static class GameLoop
     {
+        private const ConsoleKey _keyExit = ConsoleKey.Escape;
+
         private const int _w = 80;
         private const int _h = 25;
 
@@ -94,7 +96,7 @@ namespace RhinoGator
                 { // (limits scope)
                     var pressedKeys = GetPressedKeys();
 
-                    if(pressedKeys.Contains(ConsoleKey.Escape))
+                    if(pressedKeys.Contains(_keyExit))
                     {
                         break; // Exits game loop.
                     }
