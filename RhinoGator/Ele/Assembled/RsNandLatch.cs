@@ -23,6 +23,17 @@ namespace RhinoGator.Ele.Assembled
                 throw new NotSupportedException();
             }
         }
+        internal State SecondOutput
+        { 
+            get
+            {
+                return _nandS.Output;
+            }
+            private set
+            {
+                throw new NotSupportedException();
+            }
+        }
 
         internal override OutputDep GetDependencies()
         {
