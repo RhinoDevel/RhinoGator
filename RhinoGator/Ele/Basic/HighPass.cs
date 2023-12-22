@@ -20,7 +20,33 @@ namespace RhinoGator.Ele.Basic
 
         private protected override bool IsNextOutputHigh(List<State> inputs)
         {
-            return Output != State.High && inputs[0] == State.High;
+            switch(inputs[0])
+            {
+                case State.Rising:
+                {
+                    return true;
+                }
+                case State.High:
+                {
+                    return Output == State.Rising;
+                }
+                case State.Falling:
+                {
+                    return false;
+                }
+                case State.Low:
+                {
+                    return false;
+                }
+
+                case State.Unknown: // Falls through.
+                case State.NotConnected: // Falls through.
+                default:
+                {
+                    throw new NotSupportedException(
+                        $"Unsupported input state {inputs[0]}!");
+                }
+            }
         }
     }
 }
