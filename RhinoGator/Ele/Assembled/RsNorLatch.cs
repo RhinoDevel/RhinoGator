@@ -44,6 +44,8 @@ namespace RhinoGator.Ele.Assembled
 
         internal void Update(State inputR, State inputS)
         {
+            // This may not be 100% correct:
+
             var lastOutputR = _norR.Output;
 
             _norR.Update(new List<State>{ inputR, _norS.Output });
