@@ -1,7 +1,6 @@
 
 // RhinoDevel, MT, 2023dec25
 
-using System.Diagnostics;
 using RhinoGator.Ele.Basic;
 
 namespace RhinoGator.Ele.Assembled
