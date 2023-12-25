@@ -13,9 +13,15 @@ namespace RhinoGator.Ele.Basic
         private const OutputDep _dependencies =
             OutputDep.LastOutputs | OutputDep.CurInputs;
 
-        internal HighPass() : base(_maxInputs, _dependencies)
+        private readonly uint _pulseSteps;
+
+        private uint _curPulseStep;
+
+        internal HighPass(uint pulseSteps) : base(_maxInputs, _dependencies)
         {
-            // Nothing to do.
+            _pulseSteps = pulseSteps;
+
+            _curPulseStep = 0;
         }
 
         private protected override bool IsNextOutputHigh(List<State> inputs)
@@ -24,18 +30,26 @@ namespace RhinoGator.Ele.Basic
             {
                 case State.Rising:
                 {
+                    _curPulseStep = 0;
                     return true;
                 }
                 case State.High:
                 {
-                    return Output == State.Rising;
+                    if(_curPulseStep == _pulseSteps - 1)
+                    {
+                        return false;
+                    }
+                    ++_curPulseStep;
+                    return true;
                 }
                 case State.Falling:
                 {
+                    _curPulseStep = 0;
                     return false;
                 }
                 case State.Low:
                 {
+                    _curPulseStep = 0;
                     return false;
                 }
 
