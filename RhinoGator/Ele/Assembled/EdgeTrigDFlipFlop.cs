@@ -7,6 +7,8 @@ namespace RhinoGator.Ele.Assembled
 {
     /// <remarks>
     /// Page 96.
+    /// 
+    /// Not direct-coupled.
     /// </remarks>
     internal class EdgeTrigDFlipFlop : Base
     {
