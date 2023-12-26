@@ -55,7 +55,8 @@ namespace RhinoGator.Ele.Assembled
 
         internal override OutputDep GetDependencies()
         {
-            return _hp.Dependencies
+            return (_not == null ? 0 : _not.Dependencies)
+                | _hp.Dependencies
                 | _nandR.GetDependencies()
                 | _nandS.GetDependencies()
                 | _latch.GetDependencies();
