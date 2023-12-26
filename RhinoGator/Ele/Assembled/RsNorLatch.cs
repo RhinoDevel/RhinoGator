@@ -7,6 +7,13 @@ namespace RhinoGator.Ele.Assembled
 {
     /// <remarks>
     /// Page 91.
+    /// 
+    /// R S | Q    | Comment
+    /// -----------------------
+    /// 0 0 | N.C. | No change.
+    /// 0 1 | 1    | Set.
+    /// 1 0 | 0    | Reset.
+    /// 1 1 | *    | Race.
     /// </remarks>
     internal class RsNorLatch : Base
     {
