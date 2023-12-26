@@ -18,7 +18,7 @@ namespace RhinoGator.Examples
                 StartHigh = true
             });
         private readonly EdgeTrigJKFlipFlop _flipFlop =
-            new EdgeTrigJKFlipFlop();
+            new EdgeTrigJKFlipFlop(true);
 
         void IGameLoop.Init(int w, int h, byte[] frameBuf)
         {

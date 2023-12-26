@@ -15,10 +15,11 @@ namespace RhinoGator.Ele.Assembled
     /// </remarks>
     internal class EdgeTrigJKFlipFlop : Base
     {
-        private HighPass _hp = new HighPass(1);
-        private Nand _nandR = new Nand();
-        private Nand _nandS = new Nand();
-        private RsNandLatch _latch = new RsNandLatch();
+        private readonly Not? _not;
+        private readonly HighPass _hp;
+        private readonly Nand _nandR;
+        private readonly Nand _nandS;
+        private readonly RsNandLatch _latch;
 
         internal State Output
         { 
@@ -43,6 +44,15 @@ namespace RhinoGator.Ele.Assembled
             }
         }
 
+        internal EdgeTrigJKFlipFlop(bool negEdgeTriggered)
+        {
+            _not = negEdgeTriggered ? new Not() : null;
+            _hp = new HighPass(1);
+            _nandR = new Nand();
+            _nandS = new Nand();
+            _latch = new RsNandLatch();
+        }
+
         internal override OutputDep GetDependencies()
         {
             return _hp.Dependencies
@@ -53,7 +63,15 @@ namespace RhinoGator.Ele.Assembled
 
         internal void Update(State j, State k, State clk)
         {
-            _hp.Update(new List<State>{ clk });
+            if(_not == null)
+            {
+                _hp.Update(new List<State>{ clk });
+            }
+            else
+            {
+                _not.Update(new List<State>{ clk });
+                _hp.Update(new List<State>{ _not.Output });
+            }
 
             _nandR.Update(
                 new List<State> { j, _hp.Output, _latch.SecondOutput });
