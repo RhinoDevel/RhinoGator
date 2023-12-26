@@ -9,6 +9,9 @@ namespace RhinoGator.Ele.Assembled
     /// Page 99.
     /// 
     /// Not direct-coupled.
+    /// 
+    /// Can divide a frequency by two (J = 1 and K = 1), always with an output
+    /// duty cycle of 50%.
     /// </remarks>
     internal class EdgeTrigJKFlipFlop : Base
     {
