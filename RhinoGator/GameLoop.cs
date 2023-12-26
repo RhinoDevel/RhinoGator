@@ -19,6 +19,7 @@ namespace RhinoGator
         private const int _defaultStepsPerFrame = 1; // Kind of random.
 
         private const ConsoleKey _keyExit = ConsoleKey.Escape;
+        private const ConsoleKey _keyPause = ConsoleKey.Spacebar;
 
         private static readonly byte[] _frameBuf = new byte[_w * _h];
 
@@ -72,6 +73,7 @@ namespace RhinoGator
         {
             double fps = (double)_defaultFps,
                 stepsPerFrame = (double)_defaultStepsPerFrame;
+            bool isPaused = false;
 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.CursorVisible = false;
@@ -101,6 +103,11 @@ namespace RhinoGator
                     if(pressedKeys.Contains(_keyExit))
                     {
                         break; // Exits game loop.
+                    }
+
+                    if(pressedKeys.Contains(_keyPause))
+                    {
+                        isPaused = !isPaused;
                     }
 
                     if(pressedKeys.Contains(ConsoleKey.Add))
@@ -148,11 +155,14 @@ namespace RhinoGator
                 //        (int)((1000.0 * 1000.0 * msPerFrame)
                 //                / _stepNs + 0.5); // Rounds
 
-                o.Update(
-                    (int)(stepsPerFrame + 0.5), // Rounds
-                    _w,
-                    _h,
-                    _frameBuf);
+                if(!isPaused)
+                {
+                    o.Update(
+                        (int)(stepsPerFrame + 0.5), // Rounds
+                        _w,
+                        _h,
+                        _frameBuf);
+                }
     
                 // ******************************************
                 // *** Copy from frame buffer to console: ***
@@ -172,6 +182,10 @@ namespace RhinoGator
                 // *** Print some additional output: ***
                 // *************************************
 
+                if(isPaused)
+                {
+                    Console.Write("PAUSED | ");
+                }
                 Console.Write($"FPS: {fps} | Steps/frame: {stepsPerFrame}");
 
                 // **********************************
