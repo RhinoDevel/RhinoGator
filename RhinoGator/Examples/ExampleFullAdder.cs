@@ -59,21 +59,21 @@ namespace RhinoGator.Examples
             _adder.Update(_tsA.Output, _tsB.Output, _tsC.Output);
             
             frameBuf[0] = 
-                _tsA.Output == State.High || _tsA.Output == State.LowFalling
+                _tsA.Output == State.High || _tsA.Output == State.HighRising
                     ? (byte)'1' : (byte)'0';
             frameBuf[2] =
-                _tsB.Output == State.High || _tsB.Output == State.LowFalling
+                _tsB.Output == State.High || _tsB.Output == State.HighRising
                     ? (byte)'1' : (byte)'0';
             frameBuf[4] =
-                _tsC.Output == State.High || _tsC.Output == State.LowFalling
+                _tsC.Output == State.High || _tsC.Output == State.HighRising
                     ? (byte)'1' : (byte)'0';
             frameBuf[6] = 
                 _adder.SumOutput == State.High
-                    || _adder.SumOutput == State.LowFalling
+                    || _adder.SumOutput == State.HighRising
                         ? (byte)'1' : (byte)'0';
             frameBuf[8] = 
                 _adder.CarryOutput == State.High
-                    || _adder.CarryOutput == State.LowFalling
+                    || _adder.CarryOutput == State.HighRising
                         ? (byte)'1' : (byte)'0';
         }
     }

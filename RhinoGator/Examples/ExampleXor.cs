@@ -50,13 +50,13 @@ namespace RhinoGator.Examples
             _xor.Update(_tsA.Output, _tsB.Output);
             
             frameBuf[0] = 
-                _tsA.Output == State.High || _tsA.Output == State.LowFalling
+                _tsA.Output == State.High || _tsA.Output == State.HighRising
                     ? (byte)'1' : (byte)'0';
             frameBuf[2] =
-                _tsB.Output == State.High || _tsB.Output == State.LowFalling
+                _tsB.Output == State.High || _tsB.Output == State.HighRising
                     ? (byte)'1' : (byte)'0';
             frameBuf[4] = 
-                _xor.Output == State.High || _xor.Output == State.LowFalling
+                _xor.Output == State.High || _xor.Output == State.HighRising
                     ? (byte)'1' : (byte)'0';
         }
     }
