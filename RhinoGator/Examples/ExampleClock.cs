@@ -37,8 +37,8 @@ namespace RhinoGator.Examples
                 _clock.Update(new List<State>());
                 _hp.Update(new List<State>{ _clock.Output });
 
-                FrameBuf.PushStateToRow(_clock.Output, 0, w, frameBuf);
-                FrameBuf.PushStateToRow(_hp.Output, 2, w, frameBuf);
+                FrameBuf.PushStateToRow('C', _clock.Output, 0, w, frameBuf);
+                FrameBuf.PushStateToRow('H', _hp.Output, 2, w, frameBuf);
             }
         }
     }

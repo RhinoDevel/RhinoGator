@@ -13,15 +13,15 @@ namespace RhinoGator
                 {
                     return '_';
                 }
-                case State.Rising:
+                case State.HighRising:
                 {
                     return '/';
                 }
                 case State.High:
                 {
-                    return '-';
+                    return '^';
                 }
-                case State.Falling:
+                case State.LowFalling:
                 {
                     return '\\';
                 }
@@ -42,23 +42,46 @@ namespace RhinoGator
             }
         }
 
-        private static void ScrollRowToLeft(int row, int w, byte[] frameBuf)
+        private static int ScrollRowToLeft(
+            int colOffset,
+            int row,
+            int rowWidth,
+            int scrollWidth,
+            byte[] frameBuf)
         {
-            int rowOffset = row * w;
+            int retVal = colOffset,
+                rowOffset = row * rowWidth,
+                colLimit = colOffset + scrollWidth - 1;
 
-            for(int col = 0;col < w - 1; ++col)
+            // Output:       C   _ / ...  ^  \     2
+            // Column index: 0 1 2 3 ... 76 77 78 79
+
+            for(;retVal < colLimit; ++retVal)
             {
-                frameBuf[rowOffset + col] = frameBuf[rowOffset + col + 1];
+                frameBuf[rowOffset + retVal] = frameBuf[rowOffset + retVal + 1];
             }
+            return retVal;
         }
 
         internal static void PushStateToRow(
-            State state, int row, int w, byte[] frameBuf)
+            char title, State state, int row, int rowWidth, byte[] frameBuf)
         {
             // Scroll to the left and add state:
             
-            ScrollRowToLeft(row, w, frameBuf);
-            frameBuf[row * w + w - 1] = (byte)GetStateChar(state);
+            int col = 0,
+                rowOffset = row * rowWidth,
+                scrollWidth;
+
+            frameBuf[rowOffset + col] = (byte)title;
+
+            col += 2;
+            scrollWidth = rowWidth - col - 2;
+
+            col = ScrollRowToLeft(col, row, rowWidth, scrollWidth, frameBuf);
+            frameBuf[rowOffset + col] = (byte)GetStateChar(state);
+            col += 2;
+            frameBuf[rowOffset + col] =
+                (byte)(((int)state).ToString()[0]); // Kind of hard-coded..
         }
     }
 }

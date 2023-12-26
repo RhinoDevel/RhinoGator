@@ -8,8 +8,8 @@ namespace RhinoGator.Examples
 {
     internal class ExampleRsNandLatch : IGameLoop
     {
-        private readonly ToggleSwitch _tsR = new ToggleSwitch(true, true);
-        private readonly ToggleSwitch _tsS = new ToggleSwitch(true, true);
+        private readonly ToggleSwitch _tsR = new ToggleSwitch(true, false);
+        private readonly ToggleSwitch _tsS = new ToggleSwitch(true, false);
         private readonly RsNandLatch _latch = new RsNandLatch();
 
         void IGameLoop.Init(int w, int h, byte[] frameBuf)
@@ -38,15 +38,14 @@ namespace RhinoGator.Examples
             _tsS.Update(new List<State>{ State.Low });
             _latch.Update(_tsR.Output, _tsS.Output);
             
-            frameBuf[0] = 
-                _tsR.Output == State.High || _tsR.Output == State.Falling
-                    ? (byte)'1' : (byte)'0';
-            frameBuf[2] =
-                _tsS.Output == State.High || _tsS.Output == State.Falling
-                    ? (byte)'1' : (byte)'0';
-            frameBuf[4] = 
-                _latch.Output == State.High || _latch.Output == State.Falling
-                    ? (byte)'1' : (byte)'0';
+            for(int i = 0;i < steps; ++i)
+            {
+                FrameBuf.PushStateToRow('R', _tsR.Output, 0, w, frameBuf);
+                FrameBuf.PushStateToRow('S', _tsS.Output, 2, w, frameBuf);
+                FrameBuf.PushStateToRow('Q', _latch.Output, 4, w, frameBuf);
+                FrameBuf.PushStateToRow(
+                    'q', _latch.SecondOutput, 6, w, frameBuf);
+            }
         }
     }
 }

@@ -42,10 +42,11 @@ namespace RhinoGator.Examples
                 _clock.Update(new List<State>());
                 _flipFlop.Update(_ts.Output, _clock.Output);
 
-                FrameBuf.PushStateToRow(_ts.Output, 0, w, frameBuf);
-                FrameBuf.PushStateToRow(_clock.Output, 2, w, frameBuf);
-                FrameBuf.PushStateToRow(_flipFlop.Output, 4, w, frameBuf);
-                FrameBuf.PushStateToRow(_flipFlop.SecondOutput, 6, w, frameBuf);
+                FrameBuf.PushStateToRow('D', _ts.Output, 0, w, frameBuf);
+                FrameBuf.PushStateToRow('C', _clock.Output, 2, w, frameBuf);
+                FrameBuf.PushStateToRow('Q', _flipFlop.Output, 4, w, frameBuf);
+                FrameBuf.PushStateToRow(
+                    'q', _flipFlop.SecondOutput, 6, w, frameBuf);
             }
         }
     }

@@ -104,11 +104,11 @@ namespace RhinoGator.Examples
                 l.Add(t);
 
                 frameBuf[w + 0 + 3 - i] =
-                    t.Item1 == State.High || t.Item1 == State.Falling
+                    t.Item1 == State.High || t.Item1 == State.LowFalling
                         ? (byte)'1' : (byte)'0';
 
                 frameBuf[w + 7 + 3 - i] =
-                    t.Item2 == State.High || t.Item2 == State.Falling
+                    t.Item2 == State.High || t.Item2 == State.LowFalling
                         ? (byte)'1' : (byte)'0';
             }
 
@@ -119,14 +119,14 @@ namespace RhinoGator.Examples
             Debug.Assert(sumOutputs.Count == _tsAs.Count);
 
             frameBuf[w + 14] = _adder.CarryOutput == State.High
-                        || _adder.CarryOutput == State.Falling
+                        || _adder.CarryOutput == State.LowFalling
                             ? (byte)'1' : (byte)'0';
 
             for(int i = 0;i < sumOutputs.Count; ++i)
             {
                 frameBuf[w + 15 + 3 - i] =
                     sumOutputs[i] == State.High
-                        || sumOutputs[i] == State.Falling
+                        || sumOutputs[i] == State.LowFalling
                             ? (byte)'1' : (byte)'0';
             }
         }

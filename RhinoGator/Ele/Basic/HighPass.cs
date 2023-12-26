@@ -28,7 +28,7 @@ namespace RhinoGator.Ele.Basic
         {
             switch(inputs[0])
             {
-                case State.Rising:
+                case State.HighRising:
                 {
                     _curPulseStep = 0;
                     return true;
@@ -42,7 +42,7 @@ namespace RhinoGator.Ele.Basic
                     ++_curPulseStep;
                     return true;
                 }
-                case State.Falling:
+                case State.LowFalling:
                 {
                     _curPulseStep = 0;
                     return false;

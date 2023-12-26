@@ -51,12 +51,8 @@ namespace RhinoGator.Ele.Assembled
 
         internal void Update(State inputR, State inputS)
         {
-            // This may not be 100% correct:
-
-            var lastOutputR = _nandR.Output;
-
+            _nandS.Update(new List<State>{ inputS, _nandR.Output });
             _nandR.Update(new List<State>{ inputR, _nandS.Output });
-            _nandS.Update(new List<State>{ inputS, lastOutputR });
         }
     }
 }

@@ -55,7 +55,7 @@ namespace RhinoGator.Ele.Basic
                 {
                     if(nextIsHigh)
                     {
-                        return State.Rising;
+                        return State.HighRising;
                     }
                     return State.Low;
                 }
@@ -64,18 +64,18 @@ namespace RhinoGator.Ele.Basic
                 {
                     if(nextIsHigh)
                     {
-                        return State.Rising;
+                        return State.HighRising;
                     }
                     return State.Low; // (keep low output)
                 }
 
-                case State.Rising:
+                case State.HighRising:
                 {
                     if(nextIsHigh)
                     {
                         return State.High;
                     }
-                    return State.Falling;
+                    return State.LowFalling;
                 }
 
                 case State.High:
@@ -84,14 +84,14 @@ namespace RhinoGator.Ele.Basic
                     {
                         return State.High; // (keep high output)
                     }
-                    return State.Falling;
+                    return State.LowFalling;
                 }
 
-                case State.Falling:
+                case State.LowFalling:
                 {
                     if(nextIsHigh)
                     {
-                        return State.Rising;
+                        return State.HighRising;
                     }
                     return State.Low;
                 }

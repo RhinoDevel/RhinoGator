@@ -10,10 +10,10 @@ namespace RhinoGator.Ele.Basic.Clock
         /// </summary>
         /// <remarks>
         /// The pulse length is the sum of <see cref="State.High"/> and
-        /// <see cref="State.Falling"/>, which equals the sum of
-        /// <see cref="State.Low"/> and <see cref="State.Rising"/>,
-        /// where <see cref="State.Falling"/> and
-        /// <see cref="State.Rising"/> always take a single "time" step.
+        /// <see cref="State.LowFalling"/>, which equals the sum of
+        /// <see cref="State.Low"/> and <see cref="State.HighRising"/>,
+        /// where <see cref="State.LowFalling"/> and
+        /// <see cref="State.HighRising"/> always take a single "time" step.
         /// </remarks>
         internal uint PulseSteps;
 
