@@ -15,7 +15,7 @@ namespace RhinoGator.Examples
                 PulseSteps = 8
             });
 
-        private readonly HighPass _hp = new HighPass(4);
+        private readonly HighPass _hp = new HighPass(1);
 
         void IGameLoop.Init(int w, int h, byte[] frameBuf)
         {

@@ -12,7 +12,7 @@ namespace RhinoGator.Ele.Assembled
     /// </remarks>
     internal class EdgeTrigDFlipFlop : Base
     {
-        private HighPass _hp = new HighPass(6);
+        private HighPass _hp = new HighPass(1);
         private Not _not = new Not();
         private Nand _nandR = new Nand();
         private Nand _nandS = new Nand();
