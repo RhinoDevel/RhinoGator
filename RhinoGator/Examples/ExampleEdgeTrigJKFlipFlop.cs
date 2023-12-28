@@ -11,6 +11,8 @@ namespace RhinoGator.Examples
     {
         private readonly ToggleSwitch _tsJ = new ToggleSwitch(true, true);
         private readonly ToggleSwitch _tsK = new ToggleSwitch(true, true);
+        private readonly ToggleSwitch _tsP = new ToggleSwitch(true, false);
+        private readonly ToggleSwitch _tsC = new ToggleSwitch(true, false);
         private readonly Clock _clock = new Clock(
             new ClockParams
             {
@@ -38,6 +40,14 @@ namespace RhinoGator.Examples
             {
                 _tsK.Toggle();
             }
+            if(pressedKeys.Contains(ConsoleKey.P))
+            {
+                _tsP.Toggle();
+            }
+            if(pressedKeys.Contains(ConsoleKey.C))
+            {
+                _tsC.Toggle();
+            }
         }
 
         void IGameLoop.Update(int steps, int w, int h, byte[] frameBuf)
@@ -46,15 +56,34 @@ namespace RhinoGator.Examples
             {
                 _tsJ.Update(new List<State>{ State.Low });
                 _tsK.Update(new List<State>{ State.Low });
+                _tsP.Update(new List<State>{ State.Low });
+                _tsC.Update(new List<State>{ State.Low });
                 _clock.Update(new List<State>());
-                _flipFlop.Update(_tsJ.Output, _tsK.Output, _clock.Output);
+
+#if DEBUG
+                if(_tsK.Output == State.Low
+                    && _tsC.Output == State.Low
+                    && _clock.Output == State.LowFalling)
+                {
+                    ;
+                }
+#endif //DEBUG
+
+                _flipFlop.Update(
+                    _tsJ.Output,
+                    _tsK.Output,
+                    _clock.Output,
+                    _tsP.Output,
+                    _tsC.Output);
 
                 FrameBuf.PushStateToRow('C', _clock.Output, 0, w, frameBuf);
                 FrameBuf.PushStateToRow('J', _tsJ.Output, 2, w, frameBuf);
                 FrameBuf.PushStateToRow('K', _tsK.Output, 4, w, frameBuf);
-                FrameBuf.PushStateToRow('Q', _flipFlop.Output, 6, w, frameBuf);
-                //FrameBuf.PushStateToRow(
-                //    'q', _flipFlop.SecondOutput, 8, w, frameBuf);
+                FrameBuf.PushStateToRow('p', _tsP.Output, 6, w, frameBuf);
+                FrameBuf.PushStateToRow('c', _tsC.Output, 8, w, frameBuf);
+                FrameBuf.PushStateToRow('Q', _flipFlop.Output, 10, w, frameBuf);
+                FrameBuf.PushStateToRow(
+                   'q', _flipFlop.SecondOutput, 12, w, frameBuf);
             }
         }
     }
