@@ -62,7 +62,8 @@ namespace RhinoGator.Ele.Assembled
                 | _latch.GetDependencies();
         }
 
-        internal void Update(State j, State k, State clk)
+        internal void Update(
+            State j, State k, State clk, State negPreset, State negClear)
         {
             if(_not == null)
             {
@@ -79,7 +80,7 @@ namespace RhinoGator.Ele.Assembled
 
             _nandS.Update(new List<State> { k, _hp.Output, _latch.Output });
 
-            _latch.Update(_nandR.Output, _nandS.Output);
+            _latch.Update(_nandR.Output, _nandS.Output, negPreset, negClear);
         }
     }
 }
