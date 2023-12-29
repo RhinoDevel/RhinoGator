@@ -59,16 +59,6 @@ namespace RhinoGator.Examples
                 _tsP.Update(new List<State>{ State.Low });
                 _tsC.Update(new List<State>{ State.Low });
                 _clock.Update(new List<State>());
-
-#if DEBUG
-                if(_tsK.Output == State.Low
-                    && _tsC.Output == State.Low
-                    && _clock.Output == State.LowFalling)
-                {
-                    ;
-                }
-#endif //DEBUG
-
                 _flipFlop.Update(
                     _tsJ.Output,
                     _tsK.Output,
