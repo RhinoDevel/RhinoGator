@@ -50,7 +50,7 @@ namespace RhinoGator.Ele.Basic
         {
             if(IsClosed)
             {
-                return inputs[0] == State.HighRising || inputs[0] == State.High;
+                return Helper.IsHigh(inputs[0]);
             }
             return _isHighIfOpen;
         }

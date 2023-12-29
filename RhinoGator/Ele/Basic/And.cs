@@ -15,8 +15,7 @@ namespace RhinoGator.Ele.Basic
 
         private protected override bool IsNextOutputHigh(List<State> inputs)
         {
-            return inputs.TrueForAll(
-                s => s == State.HighRising || s == State.High);
+            return inputs.TrueForAll(Helper.IsHigh);
         }
     }
 }

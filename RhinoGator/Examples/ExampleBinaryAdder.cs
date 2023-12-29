@@ -2,6 +2,7 @@
 // Marcel Timm, RhinoDevel, 2023dec22
 
 using System.Diagnostics;
+using RhinoGator.Ele;
 using RhinoGator.Ele.Assembled;
 using RhinoGator.Ele.Basic;
 
@@ -104,12 +105,10 @@ namespace RhinoGator.Examples
                 l.Add(t);
 
                 frameBuf[w + 0 + 3 - i] =
-                    t.Item1 == State.High || t.Item1 == State.HighRising
-                        ? (byte)'1' : (byte)'0';
+                    Helper.IsHigh(t.Item1) ? (byte)'1' : (byte)'0';
 
                 frameBuf[w + 7 + 3 - i] =
-                    t.Item2 == State.High || t.Item2 == State.HighRising
-                        ? (byte)'1' : (byte)'0';
+                    Helper.IsHigh(t.Item2) ? (byte)'1' : (byte)'0';
             }
 
             _adder.Update(l);
@@ -118,16 +117,13 @@ namespace RhinoGator.Examples
 
             Debug.Assert(sumOutputs.Count == _tsAs.Count);
 
-            frameBuf[w + 14] = _adder.CarryOutput == State.High
-                        || _adder.CarryOutput == State.HighRising
-                            ? (byte)'1' : (byte)'0';
+            frameBuf[w + 14] =
+                Helper.IsHigh(_adder.CarryOutput) ? (byte)'1' : (byte)'0';
 
             for(int i = 0;i < sumOutputs.Count; ++i)
             {
                 frameBuf[w + 15 + 3 - i] =
-                    sumOutputs[i] == State.High
-                        || sumOutputs[i] == State.HighRising
-                            ? (byte)'1' : (byte)'0';
+                    Helper.IsHigh(sumOutputs[i]) ? (byte)'1' : (byte)'0';
             }
         }
     }
