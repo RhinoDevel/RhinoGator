@@ -3,6 +3,9 @@
 
 namespace RhinoGator
 {
+    /// <summary>
+    /// Holds helper methods to draw to the frame buffer.
+    /// </summary>
     internal static class FrameBuf
     {
         private static char GetStateChar(State s)
