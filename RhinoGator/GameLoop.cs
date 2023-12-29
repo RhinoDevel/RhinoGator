@@ -25,6 +25,8 @@ namespace RhinoGator
 
         private static void BlitToConsole()
         {
+            // TODO: Add drawing in color (e.g. for LEDs)!
+
             Console.SetCursorPosition(0, 0);
 
             // Much faster:
