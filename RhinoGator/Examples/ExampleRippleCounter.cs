@@ -5,6 +5,7 @@ using System.Diagnostics;
 using RhinoGator.Ele.Assembled;
 using RhinoGator.Ele.Basic;
 using RhinoGator.Ele.Basic.Clock;
+using RhinoGator.Ele.Basic.Led;
 
 namespace RhinoGator.Examples
 {
@@ -18,12 +19,19 @@ namespace RhinoGator.Examples
                 PulseSteps = 2
             });
         private readonly RippleCounter _counter = new RippleCounter(4);
+        private readonly List<Led> _leds = new List<Led>();
 
         void IGameLoop.Init(int w, int h, byte[] frameBuf)
         {
             for(int i = 0; i < frameBuf.Length; ++i)
             {
                 frameBuf[i] = (byte)' ';
+            }
+
+            _leds.Clear(); // (not necessary)
+            for(int i = 0; i < 4; ++i) // (hard-coded 4..)
+            {
+                _leds.Add(new Led(true, LedColor.Green));
             }
         }
 
@@ -57,6 +65,18 @@ namespace RhinoGator.Examples
                 FrameBuf.PushStateToRow(
                     '3', counterOutputs[3], 10, w, frameBuf);
 
+                Debug.Assert(counterOutputs.Count == _leds.Count);
+                for(int j = 0;j < _leds.Count; ++j)
+                {
+                    _leds[j].Update(new List<State>{ counterOutputs[j] });
+                    
+                    FrameBuf.DrawLed(
+                        _leds[j],
+                        12,
+                        _leds.Count - j - 1,
+                        w,
+                        frameBuf);
+                }
             }
         }
     }
