@@ -1,6 +1,8 @@
 
 // RhinoDevel, MT, 2023dec22
 
+using RhinoGator.Ele.Basic.Led;
+
 namespace RhinoGator
 {
     /// <summary>
@@ -85,6 +87,43 @@ namespace RhinoGator
             col += 2;
             frameBuf[rowOffset + col] =
                 (byte)(((int)state).ToString()[0]); // Kind of hard-coded..
+        }
+
+        internal static void DrawLed(
+            Led led, int row, int col, int rowWidth, byte[] frameBuf)
+        {
+            int offset = row * rowWidth + col;
+
+            if(!led.IsOn)
+            {
+                frameBuf[offset] = (byte)'O';
+                return;
+            }
+
+            switch(led.GetColor())
+            {
+                case LedColor.Red:
+                {
+                    frameBuf[offset] = (byte)'r';
+                    return;
+                }
+                case LedColor.Green:
+                {
+                    frameBuf[offset] = (byte)'g';
+                    return;
+                }
+                case LedColor.Blue:
+                {
+                    frameBuf[offset] = (byte)'b';
+                    return;
+                }
+
+                default:
+                {
+                    throw new NotSupportedException(
+                        $"LED color {(int)led.GetColor()} is not supported!");
+                }
+            }
         }
     }
 }
