@@ -20,7 +20,8 @@ namespace RhinoGator.Ele.Basic
         /// </remarks>
         private readonly int? _maxInputs;
 
-        private protected Base(int? maxInputs, OutputDep dependencies)
+        private protected Base(
+            int? maxInputs, OutputDep dependencies, bool hasNoOutput = false)
         {
             Debug.Assert(maxInputs == null || 0 <= maxInputs.Value);
 
@@ -28,7 +29,7 @@ namespace RhinoGator.Ele.Basic
 
             _maxInputs = maxInputs;
 
-            Output = State.Unknown;
+            Output = hasNoOutput ? State.NotConnected : State.Unknown;
         }
 
         private protected abstract bool IsNextOutputHigh(List<State> inputs);
@@ -96,7 +97,12 @@ namespace RhinoGator.Ele.Basic
                     return State.Low;
                 }
 
-                case State.NotConnected: // Falls through. Maybe impl. later?
+                case State.NotConnected:
+                {
+                    Debug.Assert(!nextIsHigh);
+                    return State.NotConnected; // Stays not-connected.
+                }
+
                 default:
                 {
                     throw new Exception(
