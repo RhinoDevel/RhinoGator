@@ -1,14 +1,14 @@
 # RhinoGator
 
 ## About
-This is a logic circuit simulator.
+This is a digital logic circuit simulator.
 
 ## Goals
-- Implementing different logic circuits in source code, based on some simple basic logic elements, only (no cheating!). The final goal is implementing the whole SAP-1 (Simple As Possible computer) this way, or at least parts of it.
-- Understanding more complicated logic circuits by coding the simulation and making sure that they work before building them with hardware.
+- Implementing different digital logic circuits in source code, based on some simple basic logic elements, only (no cheating!). The final goal is implementing the whole SAP-1 (Simple As Possible computer) this way, or at least parts of it.
+- Understanding more complicated digital logic circuits by coding the simulation and making sure that they work before building them with hardware.
 - Be compatible with Linux and Windows operating systems.
 - Testing the productivity of using Visual Studio Code with Linux for development of a C# .NET console application (instead of using Visual Studio with Windows).
-- Maybe add support for text-based input files (e.g. JSON) describing the logic circuits to be simulated instead of doing that statically in source code.
+- Maybe add support for text-based input files (e.g. JSON) describing the digital logic circuits to be simulated instead of doing that statically in source code.
 
 ## How to use
 - Select one of the example classes (or create your own) and use it in `Program.cs`.
