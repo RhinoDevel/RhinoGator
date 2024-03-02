@@ -20,6 +20,7 @@ namespace RhinoGator.Examples
             });
         private readonly RippleCounter _counter = new RippleCounter(4);
         private readonly List<Led> _leds = new List<Led>();
+        private readonly SevenSegment _sevSeg = new SevenSegment();
 
         void IGameLoop.Init(int w, int h, byte[] frameBuf)
         {
@@ -77,6 +78,25 @@ namespace RhinoGator.Examples
                         w,
                         frameBuf);
                 }
+
+                _sevSeg.Update(
+                    counterOutputs[3],
+                    counterOutputs[2],
+                    counterOutputs[1],
+                    counterOutputs[0]);
+
+                FrameBuf.DrawSevenSegment(
+                    _sevSeg.LedA,
+                    _sevSeg.LedB,
+                    _sevSeg.LedC,
+                    _sevSeg.LedD,
+                    _sevSeg.LedE,
+                    _sevSeg.LedF,
+                    _sevSeg.LedG,
+                    14,
+                    0,
+                    w,
+                    frameBuf);
             }
         }
     }
