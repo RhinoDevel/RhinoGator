@@ -125,5 +125,24 @@ namespace RhinoGator
                 }
             }
         }
+
+        internal static void DrawSevenSegment(
+            Led a,
+            Led b,
+            Led c,
+            Led d,
+            Led e,
+            Led f,
+            Led g,
+            int row, int col, int rowWidth, byte[] frameBuf)
+        {
+            DrawLed(a, row + 0, col + 1, rowWidth, frameBuf);
+            DrawLed(b, row + 1, col + 2, rowWidth, frameBuf);
+            DrawLed(c, row + 3, col + 2, rowWidth, frameBuf);
+            DrawLed(d, row + 4, col + 1, rowWidth, frameBuf);
+            DrawLed(e, row + 3, col + 0, rowWidth, frameBuf);
+            DrawLed(f, row + 1, col + 0, rowWidth, frameBuf);
+            DrawLed(g, row + 2, col + 1, rowWidth, frameBuf);
+        }
     }
 }
